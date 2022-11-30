@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="solinda_mrp.external_layout_standard_printout">
+        <div class="header">
+            <div class="col-xs-2">
+                <!-- <image src="/ati_srf_report/static/src/img/logo2.png" style="display: inline;width: 120px;height: 75px;margin: 10px;" /> -->
+                <!-- <h3>PT. SRI REJEKI FERTILIZER</h3> -->
+            </div>
+        </div>
+        <div class="article o_report_layout_standard">
+            <t t-raw="0" />
+        </div>
+        <div class="footer">
+            <div class="text-center">
+                <!-- <strong>PT. GAPURA LIQOUA SOLUTIONS</strong>
+                <br />
+                Jl Cihampelas No. 214A, Bandung 40131, West Java, Indonesia
+                <ul class="list-inline mb4">
+                    <li class="list-inline-item">p.+62 22 2035 280</li>
+                    <li class="list-inline-item">f.+62 22 2035 290</li>
+                    <li class="list-inline-item">e.info@gapuraliquasolutions.com </li>
+                    <li class="list-inline-item">www.gapuraliquasolutions.com</li> -->
+                <!-- <li t-if="doc.company_id.vat" class="list-inline-item"><t t-esc="(company.country_id.vat_label or 'Tax ID').replace(' ','\N{NO-BREAK SPACE}')"/>: <span t-esc="company_id.vat.replace(' ','\N{NO-BREAK SPACE}')"/></li> -->
+                <!-- </ul> -->
+            </div>
+        </div>
+    </template>
+
+    <template id="report_costing_product">
+        <t t-call="web.basic_layout">
+            <div class="page">
+                <t t-foreach="docs" t-as="doc">
+                    <header>
+                        <!-- <div class="row">
+                            <div class="col-xs-2">
+                                <img t-if="doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)" style="max-height: 125px;" alt="Logo"/>
+                            </div>
+                            <div class="col-xs-2">
+                            </div>
+                        </div> -->
+                    </header>
+                    <div class="container">
+                        <table style="border-collapse: collapse; width: 100%;" border="1">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 40%;">
+                                        <h2>
+                                            <span style="text-decoration: underline;">COSTING PRODUCT</span>
+                                        </h2>
+                                    </td>
+                                    <td style="width: 22%;"></td>
+                                    <td style="width: 38%;">
+                                        Print Date <t t-esc="datetime.datetime.now().strftime('%b %d, %Y %H:%M')" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br/>
+                    <div class="container">
+                        <table style="border-collapse: collapse; width: 100%; height: 72px;" border="1">
+                            <tbody>
+                                <tr style="height: 18px;">
+                                    <td style="width: 15%; height: 18px;">Trans No.</td>
+                                    <td style="width: 2%; height: 18px; text-align: center;">:</td>
+                                    <td style="width: 25%; height: 18px;">
+                                        <t t-esc="doc.name"/>
+                                    </td>
+                                    <td style="width: 6%; height: 18px;"></td>
+                                    <td style="width: 15%; height: 18px;">Code</td>
+                                    <td style="width: 2%; height: 18px; text-align: center;">:</td>
+                                    <td style="width: 35%; height: 18px;">
+                                        <t t-esc="doc.code"/>
+                                    </td>
+                                </tr>
+                                <tr style="height: 18px;">
+                                    <td style="width: 15%; height: 18px;">Trans Date</td>
+                                    <td style="width: 2%; height: 18px; text-align: center;">:</td>
+                                    <td style="width: 25%; height: 18px;">
+                                        <t t-esc="doc.trans_date" t-options='{"widget": "date", "format": "dd-MM-yyyy"}'/>
+                                    </td>
+                                    <td style="width: 6%; height: 18px;"></td>
+                                    <td style="width: 15%; height: 18px;">Stock Name</td>
+                                    <td style="width: 2%; height: 18px; text-align: center;">:</td>
+                                    <td style="width: 35%; height: 18px;">
+                                        <t t-esc="doc.product_tmpl_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr style="height: 18px;">
+                                    <td style="width: 15%; height: 18px;">Customer</td>
+                                    <td style="width: 2%; height: 18px; text-align: center;">:</td>
+                                    <td style="width: 25%; height: 18px;">
+                                        <t t-esc="doc.customer.name"/>
+                                    </td>
+                                    <td style="width: 6%; height: 18px;"></td>
+                                    <td style="width: 15%; height: 18px;">Color</td>
+                                    <td style="width: 2%; height: 18px; text-align: center;">:</td>
+                                    <td style="width: 35%; height: 18px;">
+                                        <!-- <t t-esc="doc.color.name"/> -->
+                                    </td>
+                                </tr>
+                                <tr style="height: 18px;">
+                                    <td style="width: 15%; height: 18px;"></td>
+                                    <td style="width: 2%; height: 18px;"></td>
+                                    <td style="width: 25%; height: 18px;"></td>
+                                    <td style="width: 6%; height: 18px;"></td>
+                                    <td style="width: 15%; height: 18px;">Group</td>
+                                    <td style="width: 2%; height: 18px; text-align: center;">:</td>
+                                    <td style="width: 35%; height: 18px;">
+                                        <t t-esc="doc.categ_id.name"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                        <p>
+                            <strong>MATERIAL/FABRIC</strong>
+                        </p>
+                        <table style="border-collapse: collapse; width: 100%;" border="1">
+                            <thead style="font-size: 12px">
+                                <tr>
+                                    <td style="width: 20%; border: 1px solid black;">Description</td>
+                                    <td style="width: 10%; text-align: center; border: 1px solid black;">Color</td>
+                                    <td style="width: 10%; text-align: center; border: 1px solid black;">Unit</td>
+                                    <td style="width: 10%; text-align: center; border: 1px solid black;">Sizes</td>
+                                    <td style="width: 10%; text-align: center; border: 1px solid black;">Ratio</td>
+                                    <td style="width: 10%; text-align: center; border: 1px solid black;">H.K</td>
+                                    <td style="width: 15%; text-align: center; border: 1px solid black;">Price</td>
+                                    <td style="width: 15%; text-align: center; border: 1px solid black;">Sub Total</td>
+                                </tr>
+                            </thead>
+                            <tbody style="font-size: 12px">
+                                <t t-set="total_material" t-value="0"/>
+                                <t t-set="subtotal" t-value="0"/>
+                                <t t-foreach="doc.bom_line_ids" t-as="bom">
+                                    <tr>
+                                        <td style="width: 20%; border: 1px solid black;">
+                                            <t t-esc="bom.product_id.name"/>
+                                        </td>
+                                        <td style="width: 10%; text-align: center; border: 1px solid black;">
+                                            <t t-esc="bom.color"/>
+                                        </td>
+                                        <td style="width: 10%; text-align: center; border: 1px solid black;">
+                                            <t t-esc="bom.product_uom_id.name"/>
+                                        </td>
+                                        <td style="width: 10%; text-align: center; border: 1px solid black;">
+                                            <t t-esc="bom.sizes"/>
+                                        </td>
+                                        <td style="width: 10%; text-align: center; border: 1px solid black;">
+                                            <t t-esc="bom.ratio"/>
+                                        </td>
+                                        <td style="width: 10%; text-align: center; border: 1px solid black;">
+                                            <t t-esc="bom.product_qty"/>
+                                        </td>
+                                        <td style="width: 15%; text-align: right; border: 1px solid black;">
+                                            <t t-esc="bom.product_id.standard_price" t-options="{'widget': 'monetary','display_currency': res_company.currency_id}"/>
+                                        </td>
+                                        <td style="width: 15%; text-align: right; border: 1px solid black;">
+                                            <t t-esc="bom.total_material" t-options="{'widget': 'monetary','display_currency': res_company.currency_id}"/>
+                                            <t t-set="total_material" t-value="total_material + bom.total_material"/>
+                                            <!-- <t t-set="subtotal" t-value="bom.product_qty * bom.product_id.standard_price"/>
+                                            <t t-set="total_material" t-value="total_material + subtotal"/>
+                                            <t t-esc="subtotal"/> -->
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                            <tfoot>
+                                <td style="width: 20%;"></td>
+                                <td style="width: 10%; text-align: center;"></td>
+                                <td style="width: 10%; text-align: center;"></td>
+                                <td style="width: 10%; text-align: center;"></td>
+                                <td style="width: 10%; text-align: center;"></td>
+                                <td style="width: 10%; text-align: center;"></td>
+                                <td style="width: 15%; text-align: center; border: 1px solid black;">Total Material</td>
+                                <td style="width: 15%; text-align: right; border: 1px solid black;">
+                                    <t t-esc="total_material" t-options="{'widget': 'monetary','display_currency': res_company.currency_id}"/>
+                                </td>
+                            </tfoot>
+                        </table>
+                        <br/>
+                        <p>
+                            <strong>SERVICES</strong>
+                        </p>
+                        <table style="border-collapse: collapse; width: 100%;" border="1">
+                            <tbody style="font-size: 12px">
+                                <tr>
+                                    <td style="width: 10%; border: 1px solid black;">Services</td>
+                                    <td style="width: 18%; text-align: center; border: 1px solid black;">Fabric</td>
+                                    <td style="width: 18%; text-align: center; border: 1px solid black;">DPT</td>
+                                    <td style="width: 10%; text-align: center; border: 1px solid black;">Qty</td>
+                                    <td style="width: 12.5%; text-align: center; border: 1px solid black;">Price</td>
+                                    <td style="width: 6.5%; text-align: center; border: 1px solid black;">Shkg.%</td>
+                                    <td style="width: 10%; text-align: center; border: 1px solid black;">Shkg</td>
+                                    <td style="width: 15%; text-align: center; border: 1px solid black;">Sub Total</td>
+                                </tr>
+                                <t t-set="total_services" t-value="0"/>
+                                <t t-set="subtotal" t-value="0"/>
+                                <t t-foreach="doc.operation_ids" t-as="op">
+                                    <tr>
+                                        <td style="width: 10%; border: 1px solid black;">
+                                            <t t-esc="op.workcenter_id.name"/>
+                                        </td>
+                                        <td style="width: 24%; border: 1px solid black;">
+                                            <t t-esc="op.fabric_id.product_id.name"/>
+                                        </td>
+                                        <td style="width: 18%; text-align: center; border: 1px solid black;">
+                                            <t t-esc="op.color_id.name"/>
+                                        </td>
+                                        <td style="width: 7%; text-align: center; border: 1px solid black;">
+                                            <t t-esc="op.hk"/>
+                                        </td>
+                                        <td style="width: 12.5%; text-align: right; border: 1px solid black;">
+                                            <t t-esc="op.cost_service" t-options="{'widget': 'monetary','display_currency': res_company.currency_id}"/>
+                                        </td>
+                                        <td style="width: 6.5%; text-align: center; border: 1px solid black;">
+                                            <t t-esc="op.shrinkage"/>
+                                        </td>
+                                        <td style="width: 7%; text-align: center; border: 1px solid black;">
+                                            <t t-esc="op.shkg"/>
+                                        </td>
+                                        <td style="width: 15%; text-align: right; border: 1px solid black;">
+                                            <t t-esc="op.total_services" t-options="{'widget': 'monetary','display_currency': res_company.currency_id}"/>
+                                            <t t-set="total_services" t-value="total_services + op.total_services"/>
+                                            <!-- <t t-set="subtotal" t-value="op.cost_service * op.shkg"/>
+                                            <t t-set="total_services" t-value="total_services + subtotal"/>
+                                            <t t-esc="subtotal" t-options="{'widget': 'monetary','display_currency': res_company.currency_id}"/> -->
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td style="width: 10%;"></td>
+                                    <td style="width: 18%; text-align: center;"></td>
+                                    <td style="width: 18%; text-align: center;"></td>
+                                    <td style="width: 10%; text-align: center;"></td>
+                                    <td style="width: 12.5%; text-align: center;"></td>
+                                    <td style="width: 16.5%; text-align: center; border: 1px solid black;" colspan="2">Total Services</td>
+                                    <!-- <td style="width: 10%; text-align: center;"></td> -->
+                                    <td style="width: 15%; text-align: right; border: 1px solid black;">
+                                        <t t-esc="total_services" t-options="{'widget': 'monetary','display_currency': res_company.currency_id}"/>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <br/>
+                        <table style="border-collapse: collapse; width: 100%;" border="1">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 50%;">
+                                        <table style="border-collapse: collapse; width: 100%; height: 36px;" border="1">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="width: 30%;"></td>
+                                                    <td style="width: 30%; text-align: right;"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 30%;"></td>
+                                                    <td style="width: 30%; text-align: right;"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 30%;"></td>
+                                                    <td style="width: 30%; text-align: right;"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 30%; border: 1px solid black;">Margin(%)</td>
+                                                    <td style="width: 30%; text-align: left; border: 1px solid black;">Suggest Price</td>
+                                                </tr>
+                                                <tr style="height: 18px;">
+                                                    <td style="width: 30%; height: 18px; border: 1px solid black;">
+                                                        <t t-esc="doc.margin * 100"/>
+                                                    </td>
+                                                    <td style="width: 30%; height: 18px; text-align: left; border: 1px solid black;">
+                                                        <t t-esc="doc.suggest_price" t-options="{'widget': 'monetary','display_currency': res_company.currency_id}"/>
+                                                    </td>
+                                                </tr>
+                                                <tr style="height: 18px;">
+                                                    <td style="width: 30%; height: 18px; border: 1px solid black;">
+                                                        <t t-esc="doc.margin_2 * 100"/>
+                                                    </td>
+                                                    <td style="width: 30%; height: 18px; text-align: left; border: 1px solid black;">
+                                                        <t t-esc="doc.suggest_price_2" t-options="{'widget': 'monetary','display_currency': res_company.currency_id}"/>
+                                                    </td>
+                                                </tr>
+                                                <tr style="height: 18px;">
+                                                    <td style="width: 30%; height: 18px; border: 1px solid black;">
+                                                        <t t-esc="doc.margin_3 * 100"/>
+                                                    </td>
+                                                    <td style="width: 30%; height: 18px; text-align: left; border: 1px solid black;">
+                                                        <t t-esc="doc.suggest_price_3" t-options="{'widget': 'monetary','display_currency': res_company.currency_id}"/>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                    <td style="width: 50%;">
+                                        <table style="border-collapse: collapse; width: 100%; height: 126px;" border="1">
+                                            <tbody>
+                                                <tr style="height: 18px;">
+                                                    <td style="width: 53.6458%; text-align: right; height: 18px;">Cost Before Over</td>
+                                                    <td style="width: 5.98955%; text-align: center; height: 18px;">:</td>
+                                                    <td style="width: 40.3645%; text-align: right; height: 18px;">
+                                                        <t t-set="cost_before_over" t-value="total_services + total_material"/>
+                                                        <t t-esc="cost_before_over" t-options="{'widget': 'monetary','display_currency': res_company.currency_id}"/>
+                                                    </td>
+                                                </tr>
+                                                <tr style="height: 18px;">
+                                                    <td style="width: 53.6458%; text-align: right; height: 18px;">Over &amp; Packaging</td>
+                                                    <td style="width: 5.98955%; text-align: center; height: 18px;">:</td>
+                                                    <td style="width: 40.3645%; text-align: right; height: 18px;">
+                                                        <t t-esc="doc.over_packaging" t-options="{'widget': 'monetary','display_currency': res_company.currency_id}"/>
+                                                    </td>
+                                                </tr>
+                                                <tr style="height: 18px;">
+                                                    <td style="width: 53.6458%; text-align: right; height: 18px;">Total(IDR)</td>
+                                                    <td style="width: 5.98955%; text-align: center; height: 18px;">:</td>
+                                                    <td style="width: 40.3645%; text-align: right; height: 18px;">
+                                                        <!-- <t t-set="total" t-value="cost_before_over + doc.over_packaging"/> -->
+                                                        <t t-esc="doc.total_cost" t-options="{'widget': 'monetary','display_currency': res_company.currency_id}"/>
+                                                    </td>
+                                                </tr>
+                                                <!-- <tr style="height: 18px;">
+                                                    <td style="width: 53.6458%; text-align: right; height: 18px;">Total IDR</td>
+                                                    <td style="width: 5.98955%; text-align: center; height: 18px;">:</td>
+                                                    <td style="width: 40.3645%; text-align: right; height: 18px;">1.0###</td>
+                                                </tr> -->
+                                                <!-- <tr style="height: 18px;">
+                                                    <td style="width: 53.6458%; text-align: right; height: 18px;">Landed Cost</td>
+                                                    <td style="width: 5.98955%; text-align: center; height: 18px;">:</td>
+                                                    <td style="width: 40.3645%; text-align: right; height: 18px;">-</td>
+                                                </tr>
+                                                <tr style="height: 18px;">
+                                                    <td style="width: 53.6458%; text-align: right; height: 18px;">Landed Quoted</td>
+                                                    <td style="width: 5.98955%; text-align: center; height: 18px;">:</td>
+                                                    <td style="width: 40.3645%; text-align: right; height: 18px;">-</td>
+                                                </tr> -->
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </div>
+        </t>
+    </template>
+</odoo>

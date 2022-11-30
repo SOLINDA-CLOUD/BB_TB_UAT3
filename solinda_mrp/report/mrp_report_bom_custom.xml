@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="template_id" name="template_name" inherit_id="mrp.report_mrp_bom_pdf_line">
+        <xpath expr="//t[@t-foreach='data['lines']']" position="replace">
+
+            <tr>
+                <td style="width: 20%; border: 1px solid black;">
+                    <t t-esc="bom.product_id.name"/>
+                </td>
+                <td style="width: 10%; text-align: center; border: 1px solid black;">RFD</td>
+                <td style="width: 10%; text-align: center; border: 1px solid black;">m</td>
+                <td style="width: 10%; text-align: center; border: 1px solid black;">M/L</td>
+                <td style="width: 10%; text-align: center; border: 1px solid black;">1.00</td>
+                <td style="width: 10%; text-align: center; border: 1px solid black;">
+                    <t t-esc="bom.product_qty"/>
+                </td>
+                <td style="width: 15%; text-align: right; border: 1px solid black;">
+                    <t t-esc="bom.product_id.standard_price"/>
+                </td>
+                <td style="width: 15%; text-align: right; border: 1px solid black;">46,410.00</td>
+            </tr>
+
+            <br/>
+            <p>
+                <strong>SERVICES</strong>
+            </p>
+            <table style="border-collapse: collapse; width: 100%;" border="1">
+                <tbody>
+                    <tr>
+                        <td style="width: 10%; border: 1px solid black;">Services</td>
+                        <td style="width: 18%; text-align: center; border: 1px solid black;">Description</td>
+                        <td style="width: 18%; text-align: center; border: 1px solid black;">DPT</td>
+                        <td style="width: 10%; text-align: center; border: 1px solid black;">Qty</td>
+                        <td style="width: 12.5%; text-align: center; border: 1px solid black;">Price</td>
+                        <td style="width: 6.5%; text-align: center; border: 1px solid black;">Shkg.%</td>
+                        <td style="width: 10%; text-align: center; border: 1px solid black;">Shkg</td>
+                        <td style="width: 15%; text-align: center; border: 1px solid black;">Sub Total</td>
+                    </tr>
+                    <t t-foreach="doc.operation_ids" t-as="op">
+                        <tr>
+                            <td style="width: 10%; border: 1px solid black;">
+                                <t t-esc="op.workcenter_id.name"/>
+                            </td>
+                            <td style="width: 18%; border: 1px solid black;">
+                                <t t-esc="op.fabric_id.product_id.name"/>
+                            </td>
+                            <td style="width: 18%; text-align: center; border: 1px solid black;">Summer In Malibu</td>
+                            <td style="width: 10%; text-align: center; border: 1px solid black;">
+                                <t t-esc="op.hk"/>
+                            </td>
+                            <td style="width: 12.5%; text-align: right; border: 1px solid black;">
+                                <t t-esc="op.workcenter_id.costs_hour"/>
+                            </td>
+                            <td style="width: 6.5%; text-align: center; border: 1px solid black;">0</td>
+                            <td style="width: 10%; text-align: center; border: 1px solid black;">0.00</td>
+                            <td style="width: 15%; text-align: right; border: 1px solid black;">18,36.50.00</td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+            <br/>
+
+        </xpath>
+    </template>
+
+</odoo>

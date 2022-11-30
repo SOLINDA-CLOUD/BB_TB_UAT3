@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="solinda_mrp.external_layout_standard_printout">
+        <div class="header">
+            <div class="col-xs-2">
+                <!-- <image src="/ati_srf_report/static/src/img/logo2.png" style="display: inline;width: 120px;height: 75px;margin: 10px;" /> -->
+                <!-- <h3>PT. SRI REJEKI FERTILIZER</h3> -->
+            </div>
+        </div>
+        <div class="article o_report_layout_standard">
+            <t t-raw="0" />
+        </div>
+        <div class="footer">
+            <div class="text-center">
+                <!-- <strong>PT. GAPURA LIQOUA SOLUTIONS</strong>
+                <br />
+                Jl Cihampelas No. 214A, Bandung 40131, West Java, Indonesia
+                <ul class="list-inline mb4">
+                    <li class="list-inline-item">p.+62 22 2035 280</li>
+                    <li class="list-inline-item">f.+62 22 2035 290</li>
+                    <li class="list-inline-item">e.info@gapuraliquasolutions.com </li>
+                    <li class="list-inline-item">www.gapuraliquasolutions.com</li> -->
+                <!-- <li t-if="doc.company_id.vat" class="list-inline-item"><t t-esc="(company.country_id.vat_label or 'Tax ID').replace(' ','\N{NO-BREAK SPACE}')"/>: <span t-esc="company_id.vat.replace(' ','\N{NO-BREAK SPACE}')"/></li> -->
+                <!-- </ul> -->
+            </div>
+        </div>
+    </template>
+    <template id="report_production_detail">
+        <t t-call="web.basic_layout">
+            <div class="page">
+                <t t-foreach="docs" t-as="doc">
+                    <header>
+                    </header>
+                    <div class="container">
+                        <table style="border-collapse: collapse; width: 100%;" border="1">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 50%;">
+                                        <h2>
+                                            <span style="text-decoration: underline;">PRODUCTION DETAIL</span>
+                                        </h2>
+                                    </td>
+                                    <td style="width: 50%; text-align: right;">
+                                        Print Date Monday,<t t-esc="datetime.datetime.now().strftime('%b %d, %Y %H:%M')" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table style="border-collapse: collapse; width: 117.534%; height: 120px;" border="1">
+                            <tbody>
+                                <tr style="height: 18px;">
+                                    <td style="width: 18.0636%; height: 18px;">Trans No.</td>
+                                    <td style="width: 5.17816%; text-align: center; height: 18px;">:</td>
+                                    <td style="width: 26.7582%; height: 18px;">
+                                        <t t-esc="doc.name"/>
+                                    </td>
+                                    <td style="width: 14.9807%; height: 18px;">Customer</td>
+                                    <td style="width: 5.75629%; height: 18px; text-align: center;">:</td>
+                                    <td style="width: 14.6315%; height: 18px;">
+                                        <t t-esc="doc.customer.name"/>
+                                    </td>
+                                    <td style="width: 14.6315%; height: 90px; text-align: center;" rowspan="4">
+                                        <img t-if="doc.product_tmpl_id.image_1920" t-att-src="image_data_uri(doc.product_tmpl_id.image_1920)" style="max-height:72px; max-width:15px;"/>
+                                    </td>
+                                </tr>
+                                <tr style="height: 18px;">
+                                    <td style="width: 18.0636%; height: 18px;">Trans Date</td>
+                                    <td style="width: 5.17816%; text-align: center; height: 18px;">:</td>
+                                    <td style="width: 26.7582%; height: 18px;">
+                                        <t t-esc="doc.trans_date" t-options='{"widget": "date", "format": "dd-MM-yyyy"}'/>
+                                    </td>
+                                    <td style="width: 14.9807%; height: 18px;">SO No.</td>
+                                    <td style="width: 5.75629%; height: 18px; text-align: center;">:</td>
+                                    <td style="width: 14.6315%; height: 18px;">
+                                        <t t-esc="doc.sales_order_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr style="height: 18px;">
+                                    <td style="width: 18.0636%; height: 18px;">Delivery</td>
+                                    <td style="width: 5.17816%; text-align: center; height: 18px;">:</td>
+                                    <td style="width: 26.7582%; height: 18px;">
+                                        <t t-esc="doc.delivery_date" t-options='{"widget": "date", "format": "dd-MM-yyyy"}'/>
+                                    </td>
+                                    <td style="width: 14.9807%; height: 18px;">PO No.</td>
+                                    <td style="width: 5.75629%; height: 18px; text-align: center;">:</td>
+                                    <td style="width: 14.6315%; height: 18px;">
+                                        <t t-esc="doc.purchase_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr style="height: 36px;">
+                                    <td style="width: 18.0636%; height: 36px;">Stock Name</td>
+                                    <td style="width: 5.17816%; text-align: center; height: 36px;">:</td>
+                                    <td style="width: 26.7582%; height: 36px;">
+                                        <t t-esc="doc.product_tmpl_id.name"/>
+                                    </td>
+                                    <td style="width: 14.9807%; height: 36px;">Wholesale Price</td>
+                                    <td style="width: 5.75629%; height: 36px; text-align: center;">:</td>
+                                    <td style="width: 14.6315%; height: 36px;">
+                                        <strong>
+                                            <t t-esc="doc.retail_price"/>
+                                        </strong>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table style="border-collapse: collapse; width: 100%; height: 90px;" border="1">
+                            <tbody>
+                                <tr style="height: 18px;">
+                                    <td style="width: 15%; height: 18px; text-align: center; border: 1px solid black;">Supplier</td>
+                                    <td style="width: 10%; height: 18px; text-align: center; border: 1px solid black;">Payment</td>
+                                    <td style="width: 10%; height: 18px; text-align: center; border: 1px solid black;">Fabric</td>
+                                    <td style="width: 10%; height: 18px; text-align: center; border: 1px solid black;">Service</td>
+                                    <td style="width: 10%; height: 18px; text-align: center; border: 1px solid black;">Color</td>
+                                    <td style="width: 3%; height: 18px; text-align: center; border: 1px solid black;">HK</td>
+                                    <td style="width: 5%; height: 18px; text-align: center; border: 1px solid black;">Qty</td>
+                                    <td style="width: 5%; height: 18px; text-align: center; border: 1px solid black;">Price</td>
+                                    <td style="width: 5%; height: 18px; text-align: center; border: 1px solid black;">UoM</td>
+                                    <td style="width: 5%; height: 18px; text-align: center; border: 1px solid black;">T.Dyeing</td>
+                                    <td style="width: 5%; height: 18px; text-align: center; border: 1px solid black;">T.Mtr</td>
+                                    <td style="width: 5%; height: 18px; text-align: center; border: 1px solid black;">T.Buy</td>
+                                    <td style="width: 5%; height: 18px; text-align: center; border: 1px solid black;">Shkg.</td>
+                                    <td style="width: 7%; height: 18px; text-align: center; border: 1px solid black;">T.Cost</td>
+                                </tr>
+                                <t t-foreach="doc.move_raw_ids" t-as="move">
+                                    <tr style="height: 18px;">
+                                        <td style="width: 15%; height: 18px; border: 1px solid black;">
+                                            <t t-esc="move.supplier.name"/>
+                                        </td>
+                                        <td style="width: 10%; height: 18px; text-align: center; border: 1px solid black;">
+                                            <t t-esc="move.supplier.property_supplier_payment_term_id.name"/>
+                                        </td>
+                                        <td style="width: 10%; height: 18px; border: 1px solid black;">
+                                            <t t-esc="move.product_id.name"/>
+                                        </td>
+                                        <td style="width: 10%; height: 18px; border: 1px solid black;">FABRIC</td>
+                                        <td style="width: 10%; height: 18px; border: 1px solid black;">
+                                            <t t-esc="move.color.name"/>
+                                        </td>
+                                        <td style="width: 3%; height: 18px; text-align: center; border: 1px solid black;">
+                                            <t t-esc="move.hk"/>
+                                        </td>
+                                        <td style="width: 5%; height: 18px; text-align: right; border: 1px solid black;">
+                                            <t t-esc="doc.product_qty"/>
+                                        </td>
+                                        <td style="width: 5%; height: 18px; text-align: right; border: 1px solid black;">
+                                            <t t-esc="move.product_id.standard_price"/>
+                                        </td>
+                                        <td style="width: 5%; height: 18px; text-align: center; border: 1px solid black;">
+                                            <t t-esc="move.product_uom.name"/>
+                                        </td>
+                                        <td style="width: 5%; height: 18px; text-align: right; border: 1px solid black;">-</td>
+                                        <td style="width: 5%; height: 18px; text-align: right; border: 1px solid black;">
+                                            <t t-set="total" t-value="move.hk * doc.product_qty"/>
+                                            <t t-esc="total"/>
+                                        </td>
+                                        <td style="width: 5%; height: 18px; text-align: right; border: 1px solid black;">
+                                            <t t-esc="move.total_buy"/>
+                                        </td>
+                                        <td style="width: 5%; height: 18px; text-align: right; border: 1px solid black;">-</td>
+                                        <td style="width: 7%; height: 18px; text-align: right; border: 1px solid black;">
+                                            <t t-esc="move.total_cost"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <t t-foreach="doc.workorder_ids" t-as="work">
+                                    <tr style="height: 18px;">
+                                        <td style="width: 15%; height: 18px; border: 1px solid black;">
+                                            <t t-esc="work.supplier.name"/>
+                                        </td>
+                                        <td style="width: 10%; height: 18px; text-align: center; border: 1px solid black;">
+                                            <t t-esc="work.supplier.property_supplier_payment_term_id.name"/>
+                                        </td>
+                                        <td style="width: 10%; height: 18px; border: 1px solid black;">
+                                            <t t-esc="work.fabric_id.product_id.name"/>
+                                        </td>
+                                        <td style="width: 10%; height: 18px; border: 1px solid black;">
+                                            <t t-esc="work.workcenter_id.name"/>
+                                        </td>
+                                        <td style="width: 10%; height: 18px; border: 1px solid black;">
+                                            <t t-esc="work.color_id.name"/>
+                                        </td>
+                                        <td style="width: 3%; height: 18px; text-align: center; border: 1px solid black;">
+                                            <t t-esc="work.hk"/>
+                                        </td>
+                                        <td style="width: 5%; height: 18px; text-align: right; border: 1px solid black;">
+                                            <t t-esc="work.qty_production"/>
+                                        </td>
+                                        <td style="width: 5%; height: 18px; text-align: right; border: 1px solid black;">
+                                            <t t-esc="work.workcenter_id.costs_hour"/>
+                                        </td>
+                                        <td style="width: 5%; height: 18px; text-align: center; border: 1px solid black;">
+                                            <t t-esc="work.workcenter_id.uom_id.name"/>
+                                        </td>
+                                        <td style="width: 5%; height: 18px; text-align: right; border: 1px solid black;">
+                                            <t t-esc="work.total_dyeing"/>
+                                        </td>
+                                        <td style="width: 5%; height: 18px; text-align: right; border: 1px solid black;">
+                                            <t t-set="total" t-value="work.hk * work.qty_production"/>
+                                            <t t-esc="total"/>
+                                        </td>
+                                        <td style="width: 5%; height: 18px; text-align: right; border: 1px solid black;">-</td>
+                                        <td style="width: 5%; height: 18px; text-align: right; border: 1px solid black;">-</td>
+                                        <td style="width: 7%; height: 18px; text-align: right; border: 1px solid black;">
+                                            <t t-esc="work.total_cost"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <!-- <tr style="height: 18px;">
+                                    <td style="width: 10%; height: 18px;">OFFICE</td>
+                                    <td style="width: 10%; height: 18px; text-align: center;">NO - PAYMENT</td>
+                                    <td style="width: 10%; height: 18px;">RAYON LINEN NIKI</td>
+                                    <td style="width: 10%; height: 18px;">CUTTING</td>
+                                    <td style="width: 10%; height: 18px;">SUMMER IN MALIBU PASTEL</td>
+                                    <td style="width: 10%; height: 18px; text-align: center;">-</td>
+                                    <td style="width: 5%; height: 18px; text-align: right;">60</td>
+                                    <td style="width: 5%; height: 18px; text-align: right;">-</td>
+                                    <td style="width: 5%; height: 18px; text-align: center;">pcs</td>
+                                    <td style="width: 5%; height: 18px; text-align: right;">-</td>
+                                    <td style="width: 5%; height: 18px; text-align: right;">-</td>
+                                    <td style="width: 5%; height: 18px; text-align: right;">-</td>
+                                    <td style="width: 5%; height: 18px; text-align: right;">-</td>
+                                    <td style="width: 5%; height: 18px; text-align: right;">-</td>
+                                </tr>
+                                <tr style="height: 18px;">
+                                    <td style="width: 10%; height: 18px;">Ibu Agung</td>
+                                    <td style="width: 10%; height: 18px; text-align: center;">CREDIT - NO DEPOSI</td>
+                                    <td style="width: 10%; height: 18px;">SUMMER CRUSH SARONG</td>
+                                    <td style="width: 10%; height: 18px;">SEWING</td>
+                                    <td style="width: 10%; height: 18px;">SUMMER IN MALIBU PASTEL</td>
+                                    <td style="width: 10%; height: 18px; text-align: center;">-</td>
+                                    <td style="width: 5%; height: 18px; text-align: right;">60</td>
+                                    <td style="width: 5%; height: 18px; text-align: right;">25,000</td>
+                                    <td style="width: 5%; height: 18px; text-align: center;">pcs</td>
+                                    <td style="width: 5%; height: 18px; text-align: right;">-</td>
+                                    <td style="width: 5%; height: 18px; text-align: right;">-</td>
+                                    <td style="width: 5%; height: 18px; text-align: right;">-</td>
+                                    <td style="width: 5%; height: 18px; text-align: right;">-</td>
+                                    <td style="width: 5%; height: 18px; text-align: right;">1,500,000</td>
+                                </tr> -->
+                                <tr>
+                                    <td style="width: 15%; border: 1px solid black;"></td>
+                                    <td style="width: 10%; text-align: center; border: 1px solid black;"></td>
+                                    <td style="width: 10%; border: 1px solid black;"></td>
+                                    <td style="width: 10%; border: 1px solid black;"></td>
+                                    <td style="width: 10%; border: 1px solid black;"></td>
+                                    <td style="width: 3%; text-align: center; border: 1px solid black;"></td>
+                                    <td style="width: 5%; text-align: right; border: 1px solid black;"></td>
+                                    <td style="width: 5%; text-align: right; border: 1px solid black;"></td>
+                                    <td style="width: 5%; text-align: center; border: 1px solid black;"></td>
+                                    <td style="width: 5%; text-align: right; border: 1px solid black;"></td>
+                                    <td style="width: 5%; text-align: right; border: 1px solid black;"></td>
+                                    <td style="width: 5%; text-align: right; border: 1px solid black;"></td>
+                                    <td style="width: 5%; text-align: right; border: 1px solid black;"></td>
+                                    <td style="width: 7%; text-align: right; border: 1px solid black;">
+                                        <strong>
+                                            <t t-esc="doc.total_cost"/>
+                                        </strong>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table style="border-collapse: collapse; width: 100%;" border="1">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 50%; text-align: center;">
+                                        <table style="border-collapse: collapse; width: 100%;" border="1">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="width: 50%; border: 1px solid black;">SIZE</td>
+                                                    <td style="width: 50%; border: 1px solid black;">Qty</td>
+                                                </tr>
+                                                <t t-foreach="doc.by_product_ids" t-as="by">
+                                                    <tr>
+                                                        <td style="width: 50%; border: 1px solid black;">
+                                                            <t t-esc="by.size"/>
+                                                        </td>
+                                                        <td style="width: 50%; border: 1px solid black;">
+                                                            <t t-esc="by.product_uom_qty"/>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                    <td style="width: 50%;">
+                                        <table style="border-collapse: collapse; width: 100%;" border="1">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="width: 22.158%; border: 1px solid black;">Total Cost</td>
+                                                    <td style="width: 4.81688%; text-align: center; border: 1px solid black;">:</td>
+                                                    <td style="width: 84.2118%; text-align: right; border: 1px solid black;">
+                                                        <strong>Rp. 5,419,727.27</strong>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 22.158%; border: 1px solid black;">Total Wholesale</td>
+                                                    <td style="width: 4.81688%; text-align: center; border: 1px solid black;">:</td>
+                                                    <td style="width: 84.2118%; text-align: right; border: 1px solid black;">
+                                                        <strong>Rp. 10,800,000.00</strong>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 22.158%; border: 1px solid black;">ROI</td>
+                                                    <td style="width: 4.81688%; text-align: center; border: 1px solid black;">:</td>
+                                                    <td style="width: 84.2118%; text-align: right; border: 1px solid black;">
+                                                        <strong>49.82%</strong>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table style="border-collapse: collapse; width: 100%;" border="1">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 13.2948%;">Notes</td>
+                                    <td style="width: 11.368%; text-align: center;">:</td>
+                                    <td style="width: 75.3371%;"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table style="border-collapse: collapse; width: 100%; height: 76px;" border="1">
+                            <tbody>
+                                <tr style="height: 18px;">
+                                    <td style="width: 20%; text-align: center; height: 18px;">Prepared By,</td>
+                                    <td style="width: 20%; text-align: center; height: 18px;"></td>
+                                    <td style="width: 20%; text-align: center; height: 18px;">Checked,</td>
+                                    <td style="width: 20%; text-align: center; height: 18px;"></td>
+                                    <td style="width: 20%; text-align: center; height: 18px;">Approved,</td>
+                                </tr>
+                                <tr style="height: 40px;">
+                                    <td style="width: 20%; text-align: center; height: 40px;"></td>
+                                    <td style="width: 20%; text-align: center; height: 40px;"></td>
+                                    <td style="width: 20%; text-align: center; height: 40px;"></td>
+                                    <td style="width: 20%; text-align: center; height: 40px;"></td>
+                                    <td style="width: 20%; text-align: center; height: 40px;"></td>
+                                </tr>
+                                <tr style="height: 18px;">
+                                    <td style="width: 20%; text-align: center; height: 18px;">(Kadek Surya)</td>
+                                    <td style="width: 20%; text-align: center; height: 18px;"></td>
+                                    <td style="width: 20%; text-align: center; height: 18px;">(.................)</td>
+                                    <td style="width: 20%; text-align: center; height: 18px;"></td>
+                                    <td style="width: 20%; text-align: center; height: 18px;">(.................)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </div>
+        </t>
+    </template>
+</odoo>

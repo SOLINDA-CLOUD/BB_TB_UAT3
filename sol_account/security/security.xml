@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <record id="additional_group_approval_bill" model="res.groups">
+            <field name="name">Additional Approval Vendor Bill</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <record model="ir.ui.view" id="purchase_order_custom_form">
+      <field name="name">purchase.custom.order.form</field>
+      <field name="model">purchase.order</field>
+      <field name="inherit_id" ref="purchase.purchase_order_form" />
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <!-- <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">
+          <attribute name="readonly">1</attribute>
+        </xpath> -->
+        <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="after">
+          <field name="fabric_por" optional="show" />
+          <field name="lining_por" optional="show" />
+          <!-- <field name="color" optional="hide" /> -->
+          <field name="colour" optional="show" style="font-weight:Bold;text-align:center"/>
+          <field name="size" optional="show" style="font-weight:Bold;text-align:center"/>
+          <field name="label" optional="show" />
+          <!-- <field name="type" /> -->
+        </xpath>
+        <xpath expr="//field[@name='order_line']/tree/field[@name='price_subtotal']" position="after">
+          <field name="prod_comm" />
+          <field name="image" widget="image" class="oe_avatar"/>
+        </xpath>
+        <xpath expr="//notebook//page[1]" position="after">
+          <page string="Additional Information" attrs="{'invisible': [('company_id', '=', 1)]}">
+            <group>
+              <field name="attention" />
+              <field name="sub_suplier" />
+              <field name="brand" />
+              <field name="buyer" />
+            </group>
+          </page>
+        </xpath>
+        <xpath expr="//field[@name='picking_type_id']" position="before">
+          <field name="supplier_po" attrs="{'invisible': [('company_id', '=', 1)]}"/>
+          <!-- <field name="po" attrs="{'invisible': [('company_id', '=', 1)]}"/> -->
+          <label for="ordering_date" attrs="{'invisible': [('company_id', '=', 1)]}"/>
+          <div class="o_row" attrs="{'invisible': [('company_id', '=', 1)]}">
+            <field name="ordering_date" placeholder="Start Date" />
+ -
+            <field name="delivery_date" placeholder="End Date" />
+          </div>
+        </xpath>
+
+      </field>
+    </record>
+
+  </data>
+</odoo>

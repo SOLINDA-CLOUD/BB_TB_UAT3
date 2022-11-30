@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="mrp.mrp_bom_form_action" model="ir.actions.act_window">
+        <field name="name">Pre-Production Sample</field>
+    </record>
+
+    <menuitem name="Pre-Production Sample" id="mrp.menu_mrp_bom_form_action" sequence="13" parent="mrp.menu_mrp_bom" action="mrp.mrp_bom_form_action" />
+
+    <record id="mrp_bom_inherit_costing_product" model="ir.ui.view">
+        <field name="name">mrp.bom.inherit.costing.product</field>
+        <field name="model">mrp.bom</field>
+        <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <button string="Order" name="order" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                    <button string="Unorder" name="unorder" type="object" invisible="1"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,order" />
+                </header>
+            </xpath>
+            <field name="product_tmpl_id" position="before">
+                <field name="name" />
+                <field name="parent_pps" readonly="1" />
+                <field name="trans_date" />
+                <field name="customer" />
+            </field>
+            <xpath expr="//group/group/div[@class='o_row']" position="after">
+                <field name="categ_id" />
+                <field name="retail_price" />
+            </xpath>
+            <field name="company_id" position="after">
+                <field name="over_packaging" />
+                <field name="is_final" widget="boolean_toggle"/>
+                <field name="total_cost" />
+                <field name="margin" widget="percentage"/>
+                <field name="margin_2" widget="percentage"/>
+                <field name="margin_3" widget="percentage"/>
+            </field>
+
+            <xpath expr="//notebook/page/field/tree/field[@name='product_id']" position="after">
+                <field name="supplier" />
+                <field name="color" />
+                <field name="sizes" />
+                <field name="ratio" />
+            </xpath>
+            <xpath expr="//notebook/page/field/tree/button[@name='action_see_attachments']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//notebook/page/field/tree/field[@name='attachments_count']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//notebook/page[@name='components']" position="attributes">
+                <attribute name="string">Material</attribute>
+            </xpath>
+            <xpath expr="//field[@name='picking_type_id']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+            <xpath expr="//group/group/field[@name='product_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="mrp_bom_tree_inherit_costing" model="ir.ui.view">
+        <field name="name">mrp.bom.tree.inherit.costing</field>
+        <field name="model">mrp.bom</field>
+        <field name="inherit_id" ref="mrp.mrp_bom_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="sequence" position="after">
+                <field name="name" />
+                <field name="customer" />
+            </field>
+            <field name="code" position="before">
+                <field name="parent_pps" />
+            </field>
+            <xpath expr="//field[@name='type']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='product_uom_id']" position="after">
+                <!-- Add your fields here -->
+                <field name="is_final" widget="boolean_button"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

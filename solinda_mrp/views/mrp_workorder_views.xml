@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- <record id="mrp_prodworkorder_inherit_mrp" model="ir.ui.view">
+        <field name="name">mrp.workorder.view.list.inherit</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="mrp_workorder.mrp_production_workorder_tree_editable_view_inherit_workorder"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='open_tablet_view']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record> -->
+
+    <record id="mrp_workorder_inherit_custom_tree" model="ir.ui.view">
+        <field name="name">model.name.view.form.inherit</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="mrp.mrp_production_workorder_tree_editable_view"/>
+        <field name="arch" type="xml">
+            <field name="workcenter_id" position="after">
+                <field name="order_id" />
+                <field name="supplier" />
+                <field name="fabric_id" />
+                <field name="color_id" />
+                <field name="hk" />
+                <field name="shrinkage" />
+                <field name="picking_ids" widget="many2many_tags" optional="hide"/>
+                <field name="out_date" optional="show"/>
+                <field name="in_date" optional="show"/>
+                <!-- <field name="total_mtr_dye" optional="show" /> -->
+                <field name="total_dyeing" optional="show" />
+            </field>
+
+            <xpath expr="//field[@name='duration']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='duration_expected']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='date_planned_start']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+
+            <xpath expr="//button[@name='button_start']" position="replace">
+                <button name="create_po" type="object" icon="fa-pencil-square-o" string="Create PO" class="oe_highlight btn-success" attrs="{'invisible': ['|', '|', '|', ('production_state','in', ('draft', 'done', 'cancel')), ('working_state', '=', 'blocked'), ('state', '=', 'done'), ('is_user_working', '!=', False)]}"/>
+                <button name="show_po" type="object" icon="fa-eye" string="Show PO" class="oe_highlight btn-success" attrs="{'invisible': [('order_id','=',False)]}"/>
+                <button name="show_receive_po" type="object" icon="fa-truck" string="Receive" class="oe_highlight btn-warning" attrs="{'invisible': [('order_id','=',False)]}"/>
+            </xpath>
+            <!-- <xpath expr="//button[@name='action_open_wizard']" position="replace">
+                <attribute name="invisible">1</attribute>
+            </xpath> -->
+            <xpath expr="//button[@name='button_unblock']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[hasclass('btn-danger')]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='button_pending']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="product_brand_view_tree" model="ir.ui.view">
+        <field name="name">product.brand.view.tree</field>
+        <field name="model">product.brand</field>
+        <field name="arch" type="xml">
+            <tree string="Brand" editable="top">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="product_brand_view_form" model="ir.ui.view">
+        <field name="name">product.brand.view.form</field>
+        <field name="model">product.brand</field>
+        <field name="arch" type="xml">
+            <form string="Brand">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="product_brand_action" model="ir.actions.act_window">
+        <field name="name">Brand</field>
+        <field name="res_model">product.brand</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- <menuitem id="product_brand_menu" name="Data Master Story" action="sol_purchase.product_brand_action" parent="purchase_request.parent_menu_purchase_request" sequence="10"/> -->
+    <menuitem id="menu_product_brand_in_config_stock" name="Brand" action="sol_bb_product.product_brand_action" parent="stock.menu_stock_config_settings" sequence="8"/>
+
+
+</odoo>

@@ -1,0 +1,56 @@
+<odoo>
+  <data>
+    <record id="inherit_field_product_variant" model="ir.ui.view">
+      <field name="name">product.variant.add.field.view.form.inherit</field>
+      <field name="model">product.product</field>
+      <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
+      <field name="arch" type="xml">
+        <xpath expr="//group/group[@name='pricing']" position="after">
+          <group name="additional" string="Additional Info">
+            <field name="class_product" required="1"/>
+            <field name="launch_date" />
+            <field name="collection_product" />
+            <field name="order_notes" />
+            <field name="consumption" />
+            <field name="category" invisible="1" />
+            <field name="fabric_width" attrs="{'invisible':[('category', '!=','Raw Material')]}" />
+          </group>
+        </xpath>
+      </field>
+    </record>
+
+    <record id="barcode_optional_inherit_product" model="ir.ui.view">
+      <field name="name">barcode.optional.inherit.product</field>
+      <field name="model">product.product</field>
+      <field name="inherit_id" ref="product.product_product_tree_view"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='default_code']" position="replace">
+          <field name="default_code" readonly="1"/>
+        </xpath>
+        <xpath expr="//field[@name='barcode']" position="replace">
+          <field name="barcode" readonly="1"/>
+        </xpath>
+        <xpath expr="//field[@name='uom_id']" position="after">
+          <field name="consumption" />
+          <field name="from_origin" invisible="1" />
+        </xpath>
+        <!-- <xpath expr="//tree" position="attributes">
+          <attribute name="editable">top</attribute>
+        </xpath> -->
+      </field>
+    </record>
+
+    <record id="product_product_inherit_view_form_fabric_width" model="ir.ui.view">
+      <field name="name">product.product.inherit.view.form.fabric.width</field>
+      <field name="model">product.product</field>
+      <field name="inherit_id" ref="product.product_normal_form_view"/>
+      <field name="arch" type="xml">
+        <field name="company_id" position="after">
+          <field name="category" invisible="1" />
+          <field name="consumption" attrs="{'invisible':[('category', '!=','Raw Material')]}" />
+          <field name="fabric_width" attrs="{'invisible':[('category', '!=','Raw Material')]}"/>
+        </field>
+      </field>
+    </record>
+  </data>
+</odoo>

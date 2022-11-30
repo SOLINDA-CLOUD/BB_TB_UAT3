@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <record id="data_master_story_view_tree" model="ir.ui.view">
+      <field name="name">data.master.story.view.tree</field>
+      <field name="model">data.master.story</field>
+      <field name="arch" type="xml">
+        <tree string="Data Master Story" editable="top">
+          <field name="name"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="data_master_story_view_form" model="ir.ui.view">
+      <field name="name">data.master.story.view.form</field>
+      <field name="model">data.master.story</field>
+      <field name="arch" type="xml">
+        <form string="Data Master Story">
+          <sheet>
+            <group>
+              <field name="name"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="data_master_story_action" model="ir.actions.act_window">
+      <field name="name">Master Story</field>
+      <field name="res_model">data.master.story</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_purchase_products" name="Configuration" parent="purchase_request.parent_menu_purchase_request" sequence="12"/>
+    <menuitem id="data_master_story_menu" name="Master Story" action="sol_purchase.data_master_story_action" parent="menu_purchase_products" sequence="10"/>
+
+
+
+  </data>
+</odoo>

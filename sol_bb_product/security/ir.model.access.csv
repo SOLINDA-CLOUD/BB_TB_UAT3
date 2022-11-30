@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+sol_bb_product.access_product_brand,access_product_brand,sol_bb_product.model_product_brand,base.group_user,1,1,1,1
+sol_bb_product.access_stock_type,access_stock_type,sol_bb_product.model_stock_type,base.group_user,1,1,1,1
+sol_bb_product.access_product_collections,access_product_collections,sol_bb_product.model_product_collections,base.group_user,1,1,1,1
+sol_bb_product.access_class_product,access_class_product,sol_bb_product.model_class_product,base.group_user,1,1,1,1
+access_data_fabric_lining,sol_bb_product.data_fabric_lining,model_data_fabric_lining,base.group_user,1,1,1,1
+

@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_variant_detail,variant_detail,model_variant_detail,base.group_user,1,1,1,1
+access_component_breakdown,component_breakdown,model_component_breakdown,base.group_user,1,1,1,1
+access_mrp_breakdown,mrp_breakdown,model_mrp_breakdown,base.group_user,1,1,1,1
+access_mrp_breakdown_line,mrp_breakdown_line,model_mrp_breakdown_line,base.group_user,1,1,1,1
+access_temp_product_mo,temp_product_mo,model_temp_product_mo,base.group_user,1,1,1,1
+access_by_product_dummy,by_product_dummy,model_by_product_dummy,base.group_user,1,1,1,1

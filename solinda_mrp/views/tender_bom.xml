@@ -1,0 +1,74 @@
+<odoo>
+    <data>
+
+        <record id="tender_bom_view_tree" model="ir.ui.view">
+            <field name="name">tender.bom.view.tree</field>
+            <field name="model">tender.bom</field>
+            <field name="arch" type="xml">
+                <tree string="Vote Pre-Production Sample">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="product_id" invisible="1"/>
+                    <field name="product_tmpl_id"/>
+                    <field name="end_tender" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- tender.bom form view -->
+        <record id="tender_bom_view_form" model="ir.ui.view">
+            <field name="name">tender.bom.view.form</field>
+            <field name="model">tender.bom</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <header>
+                        <!-- attrs="{'invisible': ['|',('type', '!=', '')]}" attrs="{'invisible': [('type', '!=', 'backwash')]}" -->
+                        <button name="new_bom" type="object" string="New Pre-Production Sample" states="draft" class="oe_highlight"/>
+                        <button name="set_to_draft" type="object" string="Set to draft" states="vote" class="oe_highlight"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,vote" />
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="final_bom" class="oe_stat_button" type="object" states="vote" icon="fa-check">
+                                <field name="deal_bom_id" widget="statinfo" readonly="1" string="Final"/>
+                            </button>
+                            <button name="show_bom" class="oe_stat_button" type="object" attrs="{'invisible': [('count_bom', '=', 0)]}" icon="fa-list">
+                                <field name="count_bom" widget="statinfo" readonly="1" string="Prod Sample"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h2>
+                                <field name="name" readonly="0"/>
+                            </h2>
+                        </div>
+                        <group >
+                            <group>
+                                <field name="product_tmpl_id"/>
+                            </group>
+                            <group>
+                                <field name="date" readonly="1"/>
+                                <field name="end_tender" readonly="1" invisible="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="bom_ids" invisible="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action group-->
+        <record id="tender_bom_action" model="ir.actions.act_window">
+            <field name="name">Parent Pre-Production Sample</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">tender.bom</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Parent Pre-Production Sample" id="menu_tender_mrp_bom" sequence="14" parent="mrp.menu_mrp_bom" action="tender_bom_action" />
+
+
+    </data>
+</odoo>

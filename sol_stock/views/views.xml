@@ -1,0 +1,36 @@
+<odoo>
+  <data>
+
+    <record id="inherit_view_stock_picking" model="ir.ui.view">
+      <field name="name">stock.picking.view.form.inherit</field>
+      <field name="model">stock.picking</field>
+      <field name="inherit_id" ref="stock.view_picking_form"/>
+      <field name="arch" type="xml">
+        <field name="origin" position="after">
+          <field name="origin_pr" attrs="{'required': [('mandatory_source', '=', True)]}"/>
+          <field name="mandatory_source" invisible="1"/>
+        </field>
+        <xpath expr="//field[@name='origin']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//notebook/page/field/tree/field[@name='product_uom_qty']" position="after">
+          <field name="image" widget="image" class="oe_avatar"/>
+          <field name="fabric_width" optional="show" />
+          <field name="price" />
+        </xpath>
+      </field>
+    </record>
+
+    <record id="inherit_stock_picking_type" model="ir.ui.view">
+      <field name="name">stock.picking.type.view.form.inherit</field>
+      <field name="model">stock.picking.type</field>
+      <field name="inherit_id" ref="stock.view_picking_type_form"/>
+      <field name="arch" type="xml">
+        <field name="show_operations" position="after">
+          <field name="mandatory_source" />
+        </field>
+      </field>
+    </record>
+
+  </data>
+</odoo>

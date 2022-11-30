@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  
+  <template id="external_layout_standard_printout">
+    <div class="header">
+      <div class="col-xs-2">
+        <image src="/ati_srf_report/static/src/img/logo2.png" style="display: inline;width: 120px;height: 75px;margin: 10px;"/>
+      </div>
+    </div>
+    <div class="article o_report_layout_standard">
+      <t t-raw="0" />
+    </div>
+  </template>
+
+  <template id="report_sdv">
+    <t t-call="web.basic_layout">
+      <div class="page">
+        <t t-foreach="docs" t-as="doc">
+          <header>
+            <div class="row">
+              <div class="col-xs-2">
+                <img t-if="doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)" style="max-height: 125px;" alt="Logo"/>
+              </div>
+              <div class="col-xs-2">
+              </div>
+            </div>
+          </header>
+
+          <h2 style="text-align: left; text-decoration: underline;">SAMPLE DEVELOPMENT</h2>
+          <br/>
+          <br/>
+          <table style="table-layout: fixed; border-collapse: collapse; width: 100%; height: 183px;">
+            <tbody style="font-size: 15px;">
+              <t t-foreach="doc.line_ids" t-as="order">
+                <tr style="height: 18px;">
+                  <td style="width: 18.7954%; height: 18px;">Trans No</td>
+                  <td style="width: 1.36426%; height: 18px;">:</td>
+                  <td style="width: 32.9372%; height: 18px;">
+                    <t t-esc="doc.name"/>
+                  </td>
+                  <td style="width: 1.36426%; height: 18px;"></td>
+                  <td style="width: 20.4689%; height: 18px;">Original Sample</td>
+                  <td style="width: 1.36426%; height: 18px;">:</td>
+                  <td style="width: 32.0241%; height: 18px;">
+                    <span t-field="doc.request_detail_id"/>
+                  </td>
+                </tr>
+                <tr style="height: 36px;">
+                  <td style="width: 18.7954%; height: 21px;">Trans Date</td>
+                  <td style="width: 1.36426%; height: 21px;">:</td>
+                  <td style="width: 32.9372%; height: 21px;">
+                    <t t-esc="doc.date_start"/>
+                  </td>
+                  <td style="width: 1.36426%; height: 21px;"></td>
+                  <td style="width: 20.4689%; height: 21px;">Sample Size</td>
+                  <td style="width: 1.36426%; height: 21px;">:</td>
+                  <td style="width: 32.0241%; height: 21px;">
+                    <t t-esc="doc.request_detail_id.sample_size"/>
+                  </td>
+                </tr>
+                <tr style="height: 18px;">
+                  <td style="width: 18.7954%; height: 18px;">Style Name</td>
+                  <td style="width: 1.36426%; height: 18px;">:</td>
+                  <td style="width: 32.9372%; height: 18px;">
+                    <span t-field="order.product_id.name"/>
+                  </td>
+                  <td style="width: 1.36426%; height: 18px;"></td>
+                  <td style="width: 20.4689%; height: 18px;">Sample ls Approved Size</td>
+                  <td style="width: 1.36426%; height: 18px;">:</td>
+                  <td style="width: 32.0241%; height: 18px;">
+                    <t t-esc="doc.request_detail_id.approved_size"/>
+                  </td>
+                </tr>
+                <tr style="height: 18px;">
+                  <td style="width: 18.7954%; height: 18px;">Department</td>
+                  <td style="width: 1.36426%; height: 18px;">:</td>
+                  <td style="width: 32.9372%; height: 18px;">
+                    <span t-field="order.department"/>
+                  </td>
+                  <td style="width: 1.36426%; height: 18px;"></td>
+                  <td style="width: 20.4689%; height: 18px;">Please Make Sample In Size</td>
+                  <td style="width: 1.36426%; height: 18px;">:</td>
+                  <td style="width: 32.0241%; height: 18px;">
+                    <t t-esc="doc.request_detail_id.sample_in_size"/>
+                  </td>
+                </tr>
+                <tr style="height: 36px;">
+                  <td style="width: 18.7954%; height: 36px;">Sub Department</td>
+                  <td style="width: 1.36426%; height: 36px;">:</td>
+                  <td style="width: 32.9372%; height: 36px;">
+                    <t t-esc="order.sub_department"/>
+                  </td>
+                  <td style="height: 36px; width: 1.36426%;"></td>
+                  <td style="height: 36px; width: 20.4689%;">User</td>
+                  <td style="height: 36px; width: 1.36426%;">:</td>
+                  <td style="height: 36px; width: 32.0241%;">
+                    <span t-field="doc.requested_by"/>
+                  </td>
+                </tr>
+                <tr style="height: 18px;">
+                  <td style="width: 18.7954%; height: 18px;"></td>
+                  <td style="width: 1.36426%; height: 18px;"></td>
+                  <td style="width: 32.9372%; height: 18px;"></td>
+                  <td style="width: 1.36426%; height: 18px;"></td>
+                  <td style="width: 20.4689%; height: 18px;">Fabric</td>
+                  <td style="width: 1.36426%; height: 18px;">:</td>
+                  <td style="width: 32.0241%; height: 18px;">
+                    <span t-field="order.fabric_smp"/>
+                  </td>
+                </tr>
+                <tr style="height: 18px;">
+                  <td style="width: 18.7954%; height: 18px;"></td>
+                  <td style="width: 1.36426%; height: 18px;"></td>
+                  <td style="width: 32.9372%; height: 18px;"></td>
+                  <td style="width: 1.36426%; height: 18px;"></td>
+                  <td style="width: 20.4689%; height: 18px;">Lining</td>
+                  <td style="width: 1.36426%; height: 18px;">:</td>
+                  <td style="width: 32.0241%; height: 18px;">
+                    <span t-field="order.lining_smp"/>
+                  </td>
+                </tr>
+                <tr style="height: 18px;">
+                  <td style="width: 18.7954%; height: 18px;"></td>
+                  <td style="width: 1.36426%; height: 18px;"></td>
+                  <td style="width: 32.9372%; height: 18px;"></td>
+                  <td style="width: 1.36426%; height: 18px;"></td>
+                  <td style="width: 20.4689%; height: 18px;"></td>
+                  <td style="width: 1.36426%; height: 18px;"></td>
+                  <td style="width: 32.0241%; height: 18px;"></td>
+                </tr>
+                <tr style="height: 18px;">
+                  <td style="width: 18.7954%; height: 18px;"><strong>Fit Notes</strong></td>
+                  <td style="width: 1.36426%; height: 18px;"><strong>:</strong></td>
+                  <td style="width: 32.9372%; height: 18px;"></td>
+                  <td style="width: 1.36426%; height: 18px;"></td>
+                  <td style="width: 20.4689%; height: 18px;"><strong>Fabric Swatch</strong></td>
+                  <td style="width: 1.36426%; height: 18px;"><strong>:</strong></td>
+                  <td style="width: 32.0241%; height: 18px;"></td>
+                </tr>
+              </t>
+            </tbody>
+          </table>
+          <table style="border-collapse: collapse; width: 100%; height: 36px;" border="0">
+            <tbody>
+              <t t-foreach="doc.line_ids" t-as="order">
+                <tr style="height: 36px;">
+                  <td style="width: 50.5457%; height: 36px;">
+                    <br/>
+                    <t t-esc="doc.notes"/>
+                  </td>
+                  <td style="width: 49.4543%; height: 36px;">
+                    <br/>
+                    <br/>
+                    <img t-if="order.product_id.image_1920" t-att-src="image_data_uri(order.product_id.image_1920)" style="max-height:420px; max-width:425px;"/>
+                  </td>
+                </tr>
+              </t>
+            </tbody>
+            </table>
+          <div class="container"></div>
+
+        </t>
+      </div>
+    </t>
+  </template>
+
+
+</odoo>

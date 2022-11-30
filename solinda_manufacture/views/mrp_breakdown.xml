@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="mrp_breakdown_view_tree" model="ir.ui.view">
+            <field name="name">mrp.breakdown.view.tree</field>
+            <field name="model">mrp.breakdown</field>
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="name"/>
+                    <field name="product_id"/>
+                    <field name="bom_id"/>
+                    <field name="customer_id"/>
+                    <field name="product_qty"/>
+                    <field name="uom_id"/>
+                    <field name="purchase_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--   mrp.breakdown form view -->
+        <record id="mrp_breakdown_view_form" model="ir.ui.view">
+            <field name="name">mrp.breakdown.view.form</field>
+            <field name="model">mrp.breakdown</field>
+            <field name="arch" type="xml">
+                <form string="Manufacturing">
+                    <header>
+                        <button string="Create MO" name="break_down_to_mo" type="object" class="oe_highlight"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,progress,done"/>
+                    </header>
+                    <sheet>
+                        <group col="4">
+                            <field name="name"/>
+                            <field name="product_id"/>
+                            <field name="bom_id"/>
+                            <field name="customer_id"/>
+                            <field name="product_qty"/>
+                            <field name="uom_id"/>
+                            <field name="purchase_id"/>
+                        </group>
+                        <notebook>
+                            <page name="compnent" string="Components">
+                                <field name="component_ids" nolabel="1">
+                                    <tree>
+                                        <field name="product_id"/>
+                                        <field name="supplier_id"/>
+                                        <field name="color"/>
+                                        <field name="hk"/>
+                                        <field name="location_id"/>
+                                        <field name="product_qty"/>
+                                        <field name="reserved"/>
+                                        <field name="consume"/>
+                                        <field name="breakdown_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="work_order" string="Work Orders">
+                                <field name="breakdown_line_ids" nolabel="1">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="purchase_id"/>
+                                        <field name="supplier_id"/>
+                                        <field name="fabric_id"/>
+                                        <field name="color"/>
+                                        <field name="hk"/>
+                                        <field name="shrink_age"/>
+                                        <field name="product_id"/>
+                                        <field name="state"/>
+                                        <field name="breakdown_id" invisible="1"/>
+                                        <button string="Create PO" name="create_po" type="object" class="oe_highlight"/>
+                                        <button string="Show PO" name="show_po" type="object" class="oe_highlight"/>
+                                        <button string="Receive" name="show_receive_po" type="object" class="oe_highlight"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="variant_detail" string="Variant Detail">
+                                <field name="variant_detail_ids" nolabel="1">
+                                    <tree>
+                                        <field name="product_id"/>
+                                        <field name="product_template_variant_value_ids" widget="many2many_tags"/>
+                                        <field name="product_qty"/>
+                                        <field name="uom_id"/>
+                                        <field name="breakdown_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="mrp_breakdown_action" model="ir.actions.act_window">
+            <field name="name">Manufacturing</field>
+            <field name="res_model">mrp.breakdown</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="mrp_breakdown_menu" name="Manufacturing Details" action="mrp_breakdown_action" parent="mrp.menu_mrp_manufacturing" sequence="0" active="0"/>
+
+    </data>
+</odoo>

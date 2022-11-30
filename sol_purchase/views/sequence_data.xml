@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="sequence_taboo" model="ir.sequence">
+            <field name="name">Sequence PT Taboo</field>
+            <field name="code">purchase.request.sequ</field>
+            <field name="padding">6</field>
+            <field name="prefix">SDV</field>
+            <field name="company_id" eval="1"/>
+        </record>
+        <record id="sequence_bamboo" model="ir.sequence">
+            <field name="name">Sequence PT Bamboo</field>
+            <field name="code">purchase.request.sequ</field>
+            <field name="padding">6</field>
+            <field name="prefix">SDV</field>
+            <field name="company_id" eval="2"/>
+        </record>
+ 
+        <record id="sequence_po_taboo" model="ir.sequence">
+            <field name="name">Seq Purchase Order PT Taboo</field>
+            <field name="code">purchase.order.sequ</field>
+            <field name="padding">6</field>
+            <field name="prefix">PO</field>
+            <field name="company_id" eval="1"/>
+        </record>
+        <record id="sequence_po_bamboo" model="ir.sequence">
+            <field name="name">Seq Purchase Order PT Bamboo</field>
+            <field name="code">purchase.order.sequ</field>
+            <field name="padding">6</field>
+            <field name="prefix">PO</field>
+            <field name="company_id" eval="2"/>
+        </record>
+
+        <record id="sequence_original_sample" model="ir.sequence">
+            <field name="name">Seq Original Sample PT Bamboo</field>
+            <field name="code">original.sample.sequ</field>
+            <field name="padding">6</field>
+            <field name="prefix">OSR</field>
+            <field name="company_id" eval="2"/>
+        </record>
+
+
+
+    </data>
+</odoo>

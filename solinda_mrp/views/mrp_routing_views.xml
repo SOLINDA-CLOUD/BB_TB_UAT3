@@ -1,0 +1,57 @@
+<odoo>
+  <data>
+    <record id="po_service_inherit_mrp_routing_work_center" model="ir.ui.view">
+      <field name="name">po.service.inherit.mrp.routing.work.center</field>
+      <field name="model">mrp.routing.workcenter</field>
+      <field name="inherit_id" ref="mrp.mrp_routing_workcenter_tree_view"/>
+      <field name="arch" type="xml">
+        <field name='workcenter_id' position="after">
+          <field name="supplier" />
+          <field name="cost_service" />
+          <field name="bom_id" invisible="1"/>
+          <field name="fabric_id" />
+          <field name="color_id" />
+          <field name="hk" />
+          <field name="qty" />
+          <field name="shrinkage" />
+          <field name="shkg" />
+        </field>
+        <xpath expr="//field[@name='time_mode']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//field[@name='time_computed_on']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//field[@name='time_cycle']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+      </field>
+    </record>
+
+    <record id="mrp_routing_workcenter_fabric_inherit" model="ir.ui.view">
+      <field name="name">mrp.routing.workcenter.fabric.inherit</field>
+      <field name="model">mrp.routing.workcenter</field>
+      <field name="inherit_id" ref="mrp.mrp_routing_workcenter_form_view"/>
+      <field name="arch" type="xml">
+        <field name='workcenter_id' position="after">
+          <!-- <field name="product_service_id" invisible="1" /> -->
+          <field name="color_id" domain="[('attribute_id.name','=', 'COLOR')]"/>
+          <field name="supplier" />
+          <field name="cost_service" />
+          <field name="bom_id" invisible="1"/>
+          <field name="fabric_id" domain="[('bom_id','=', bom_id)]"/>
+          <field name="hk" />
+          <field name="qty" />
+          <field name="shrinkage" />
+          <field name="shkg" />
+        </field>
+        <xpath expr="//group/group/field[@name='time_mode']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//group/group/field[@name='time_cycle']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+      </field>
+    </record>
+  </data>
+</odoo>

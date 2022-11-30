@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="stock_type_view_tree" model="ir.ui.view">
+        <field name="name">stock.type.view.tree</field>
+        <field name="model">stock.type</field>
+        <field name="arch" type="xml">
+            <tree string="Stock Type" editable="top">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="stock_type_view_form" model="ir.ui.view">
+        <field name="name">stock.type.view.form</field>
+        <field name="model">stock.type</field>
+        <field name="arch" type="xml">
+            <form string="Stock Type">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="stock_type_action" model="ir.actions.act_window">
+        <field name="name">Stock Type</field>
+        <field name="res_model">stock.type</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- <menuitem id="stock_type_menu" name="Data Master Story" action="sol_purchase.stock_type_action" parent="purchase_request.parent_menu_purchase_request" sequence="10"/> -->
+    <menuitem id="menu_stock_type_in_config_stock" name="Stock Type" action="sol_bb_product.stock_type_action" parent="stock.menu_stock_config_settings" sequence="7"/>
+
+
+</odoo>

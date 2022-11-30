@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo>
+
+    <record id="group_cancel_set_draft" model="res.groups">
+        <field name="name">Pattern Alteration Cancel/Set Draft Group</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <record id="costing_product_seq" model="ir.sequence">
+            <field name="name">Costing Product Sequence</field>
+            <field name="code">mrp.bom</field>
+            <field name="padding">5</field>
+            <field name="prefix">CPR/%(day)s/%(month)s%(y)s/</field>
+        </record>
+
+        <record id="manufacture_order_seq" model="ir.sequence">
+            <field name="name">Manufacture Order Sequence</field>
+            <field name="code">mrp.production</field>
+            <field name="padding">5</field>
+            <field name="prefix">PRD/%(day)s/%(month)s%(y)s/</field>
+        </record>
+
+
+    </data>
+
+</odoo>

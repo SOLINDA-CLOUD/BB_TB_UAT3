@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="sequence_sale_taboo" model="ir.sequence">
+            <field name="name">Sequence Sales PT Taboo</field>
+            <field name="code">sale.order.seq</field>
+            <field name="padding">6</field>
+            <field name="prefix">SO</field>
+            <field name="company_id" eval="1"/>
+        </record>
+        <record id="sequence_sale_bamboo" model="ir.sequence">
+            <field name="name">Sequence Sales PT Bamboo</field>
+            <field name="code">sale.order.seq</field>
+            <field name="padding">6</field>
+            <field name="prefix">SO</field>
+            <field name="company_id" eval="2"/>
+        </record>
+
+        
+
+    </data>
+</odoo>

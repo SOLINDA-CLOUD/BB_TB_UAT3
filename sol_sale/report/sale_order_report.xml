@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <template id="gls_reportingexternal_layout_standard_printout">
+        <div class="header">
+            <div class="col-xs-2">
+                <image src="/ati_srf_report/static/src/img/logo2.png" style="display: inline;width: 120px;height: 75px;margin: 10px;"/>
+            </div>
+        </div>
+        <div class="article o_report_layout_standard">
+            <t t-raw="0" />
+        </div>
+    </template>
+
+
+    <template id="report_sale">
+      <t t-call="web.basic_layout">
+        <t t-foreach="docs" t-as="doc">
+                
+          <div class="page">
+            <header>
+              <div class="row">
+                <div class="col-xs-2">
+                  <img t-if="doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)" style="max-height: 125px;" alt="Logo"/>
+                </div>
+                <div class="col-xs-2">
+                </div>
+              </div>
+            </header>
+
+           
+            <h1 style="text-align: right;">
+                <span style="text-decoration: underline;">SALES ORDER</span>
+            </h1>
+            <table style="border-collapse: collapse; width: 100%; height: 50px;" border="0">
+                <tbody style="font-size: 15px;">
+                    <tr style="height: 18px;">
+                        <td style="width: 18.7991%; height: 22px;">Invoice No</td>
+                        <td style="width: 2.15983%; height: 22px;">:</td>
+                        <td style="width: 31.4471%; height: 22px;">
+                          <t t-esc="doc.name"/>
+                        </td>
+                        <td style="width: 18.1425%; height: 22px;">Print Date</td>
+                        <td style="width: 2.37583%; height: 22px;">:</td>
+                        <td style="width: 38.4449%; height: 22px;">
+                          <t t-esc="datetime.date.today().strftime('%b %d, %Y')" />
+                        </td>
+                    </tr>
+                    <tr style="height: 18px;">
+                        <td style="width: 18.7991%; height: 18px;">Date</td>
+                        <td style="width: 2.15983%; height: 18px;">:</td>
+                        <td style="width: 31.4471%; height: 18px;">
+                          <t t-esc="doc.date_order"/>
+                        </td>
+                        <td style="width: 18.1425%; height: 18px;"></td>
+                        <td style="width: 2.37583%; height: 18px;"></td>
+                        <td style="width: 38.4449%; height: 18px;"></td>
+                    </tr>
+                    <tr style="height: 10px;">
+                        <td style="width: 18.7991%; height: 10px;">PO No</td>
+                        <td style="width: 2.15983%; height: 10px;">:</td>
+                        <td style="width: 31.4471%; height: 10px;">
+
+                        </td>
+                        <td style="width: 18.1425%; height: 10px;"></td>
+                        <td style="width: 2.37583%; height: 10px;"></td>
+                        <td style="width: 38.4449%; height: 10px;"></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 18.7991%;">SO No</td>
+                        <td style="width: 2.15983%;">:</td>
+                        <td style="width: 31.4471%;">
+                        
+                        </td>
+                        <td style="width: 18.1425%;"></td>
+                        <td style="width: 2.37583%;"></td>
+                        <td style="width: 38.4449%;"></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <br/><br/><br/>
+            
+            <table style="border-collapse: collapse; width: 100%;" border="1">
+                <thead style="font-size: 15px;">
+                    <tr>
+                        <td style="width: 10.1143%; border: 1px solid black; text-align: left;"><strong>Code</strong></td>
+                        <td style="width: 28.0996%; border: 1px solid black; text-align: left;"><strong>Description</strong></td>
+                        <td style="width: 9.67166%; border: 1px solid black; text-align: left;"><strong>Color</strong></td>
+                        <td style="width: 7.32326%; border: 1px solid black; text-align: left;"><strong>Size</strong></td>
+                        <td style="width: 5.398%; border: 1px solid black; text-align: right;"><strong>Qty</strong></td>
+                        <td style="width: 17.2559%; border: 1px solid black; text-align: right;"><strong>Cost Price</strong></td>
+                        <td style="width: 18.9343%; border: 1px solid black; text-align: right;"><strong>Sub Total</strong></td>
+                    </tr>
+                </thead>
+                <tbody style="font-size: 15px;">
+                  <t t-set="no" t-value="1"/>
+                    <t t-foreach="doc.order_line" t-as="order">
+                      <tr>
+                          <td style="width: 10.1143%; border: 1px solid black; text-align: left;">
+                            <t t-esc="order.product_id.code"/>
+                          </td>
+                          <td style="width: 28.0996%; border: 1px solid black;">
+                            <t t-esc="order.name"/>
+                          </td>
+                          <td style="width: 9.67166%; border: 1px solid black; text-align: left;">
+                            <t t-esc="order.colour"/>
+                          </td>
+                          <td style="width: 7.32326%; border: 1px solid black; text-align: left;">
+                            <t t-esc="order.size"/>
+                          </td>
+                          <td style="width: 5.398%; text-align: right; border: 1px solid black;">
+                            <t t-esc="order.product_uom_qty"/>
+                          </td>
+                          <td style="width: 17.2559%; text-align: right; border: 1px solid black;">
+                            <t t-esc="order.price_unit"/>
+                          </td>
+                          <td style="width: 18.9343%; text-align: right; border: 1px solid black;">
+                            <t t-esc="order.price_subtotal"/>
+                          </td>
+                      </tr>
+                    <t t-set="no" t-value="no + 1"/>
+                  </t>
+                </tbody>
+            </table>
+            
+            <br/>
+            <div id="total" class="row justify-content-end">
+                <div class="col-4">
+                    <table class="table table-sm">
+                        <t t-set="tax_totals" t-value="json.loads(doc.tax_totals_json)"/>
+                        <t t-call="account.document_tax_totals"/>
+                    </table>
+                </div>
+            </div>
+            
+            <table
+                style="border-collapse: collapse; width: 76.2906%; height: 36px;"
+                border="0">
+                <tbody style="font-size: 15px;">
+                    <tr style="height: 18px;">
+                        <td style="width: 10.7863%; height: 18px; border-right: 1px solid transparent;"><strong>Note</strong></td>
+                        <td style="width: 3.40136%; height: 18px; border-right: 1px solid transparent;">:</td>
+                        <td style="width: 71.4859%; height: 18px;">
+                          <t t-esc="doc.note"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br/><br/>
+          
+            
+            <br/><br/>
+            
+            <table
+                style="border-collapse: collapse; width: 93.1724%; height: 126px;"
+                border="0">
+                <tbody style="font-size: 15px;">
+                    <tr style="height: 18px;">
+                        <td style="width: 23.4965%; height: 18px; text-align: center;">Prepared By,</td>
+                        <td style="width: 25.5944%; height: 18px; text-align: center;">Ordered By,</td>
+                        <td style="width: 22.7972%; height: 18px; text-align: center;">Approved By,</td>
+                    </tr>
+                    <tr style="height: 90px;">
+                        <td style="width: 23.4965%; height: 90px; text-align: center;"><br/><br/><br/><br/>______________</td>
+                        <td style="width: 25.5944%; height: 90px; text-align: center;"><br/><br/><br/><br/>______________</td>
+                        <td style="width: 22.7972%; height: 90px; text-align: center;"><br/><br/><br/><br/>______________</td>
+                    </tr>
+                    <tr style="height: 18px;">
+                        <td style="width: 23.4965%; height: 18px; text-align: center;"></td>
+                        <td style="width: 25.5944%; height: 18px; text-align: center;"></td>
+                        <td style="width: 22.7972%; height: 18px; text-align: center;"></td>
+                    </tr>
+                </tbody>
+            </table>
+          
+
+
+
+          </div>
+      </t>
+    </t>
+  </template>
+</odoo>
+
+
+

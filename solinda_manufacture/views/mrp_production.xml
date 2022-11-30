@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="mrp_production_inherit_supplier_form" model="ir.ui.view">
+        <field name="name">mrp.production.inherit.supplier.form</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[@name='finished_products']" position="after">
+                <page name="dummy_by_roducts" string="Product Variant">
+                    <field name="by_product_ids" invisible="0" attrs="{'readonly': ['|', ('state', '=', 'cancel'), '&amp;', ('state', '=', 'done'), ('is_locked', '=', True)]}">
+                        <!-- <field name="by_product_ids" invisible="0" attrs="{'readonly': ['|', ('state', '=', 'cancel'), '&amp;', ('state', '=', 'done'), ('is_locked', '=', True)]}"> -->
+                        <tree delete="0" create="0" editable="top">
+                            <field name="product_id" readonly="1"/>
+                            <field name="fabric_por_id" readonly="1"/>
+                            <field name="lining_por_id" readonly="1"/>
+                            <field name="colour" readonly="1"/>
+                            <field name="size" readonly="1"/>
+                            <field name="product_uom_qty" attrs="{'readonly': ['&amp;', ('parent.state', '!=', 'draft'), '|', '&amp;', ('parent.state', 'not in', ('confirmed', 'progress', 'to_close')), ('parent.is_planned', '!=', True), ('parent.is_locked', '=', True)]}"/>
+                            <field name="product_minus"/>
+                            <field name="product_uom_id" readonly="1"/>
+                            <field name="remarks"/>
+                            <field name="mrp_id" invisible="1"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

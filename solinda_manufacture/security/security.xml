@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="group_potomo_access" model="res.groups">
+            <field name="name">Access PO to MO</field>
+        </record>
+
+        <record id="all_access_mo" model="ir.rule">
+            <field name="name">Manufacture All Record</field>
+            <field name="model_id" ref="mrp.model_mrp_production"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('solinda_manufacture.group_potomo_access'))]"/>
+        </record>
+
+        <record id="all_access_mrp_bom" model="ir.rule">
+            <field name="name">BoM All Record</field>
+            <field name="model_id" ref="mrp.model_mrp_bom"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('solinda_manufacture.group_potomo_access'))]"/>
+        </record>
+
+        <!-- Record rule multi company di mrp prod dan mrp prod line harus dimatikan -->
+        <!-- stock_picking multi-company  -->
+        <!-- Stock Operation Type multi-company -->
+        <!-- stock_move multi-company -->
+        <!-- Location multi-company -->
+        <!-- stock_move_line multi-company -->
+        <!-- Location multi-company -->
+
+    </data>
+</odoo>

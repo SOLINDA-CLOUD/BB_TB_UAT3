@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <record id="bank_statement_seq" model="ir.sequence">
+            <field name="name">Bank Statement Sequence</field>
+            <field name="code">account.bank.statement</field>
+            <field name="padding">5</field>
+            <field name="prefix">BNK/%(year)s/%(month)s/%(day)s/</field>
+        </record>
+    </data>
+</odoo>

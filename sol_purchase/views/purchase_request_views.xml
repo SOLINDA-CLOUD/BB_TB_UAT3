@@ -1,0 +1,261 @@
+<odoo>
+  <data>
+   
+    <record id="inherit_purchase_request" model="ir.ui.view">
+      <field name="name">purchase.request.view.form.inherit</field>
+      <field name="model">purchase.request</field>
+      <field name="inherit_id" ref="purchase_request.view_purchase_request_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='name']" position="attributes">
+          <attribute name="readonly">1</attribute>
+        </xpath>
+        <xpath expr="//field[@name='company_id']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//field[@name='picking_type_id']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//group/group/field[@name='origin']" position="after">
+          <label for="source"/>
+          <div class="o_row">
+            <field name="name_source" placeholder="Name of Origin" readonly="1" /> /
+            <field name="source" placeholder="No. Source" readonly="1"/>
+          </div>
+        </xpath>
+        <xpath expr="//notebook/page/field[@name='line_ids']/tree/field[@name='product_id']" position="after">
+          <field name="image" widget="image" class="oe_avatar"/>
+        </xpath>
+        <xpath expr="//notebook/page/field[@name='line_ids']/tree/field[@name='date_required']" position="after">
+          <field name="fabric_smp" />
+          <field name="lining_smp" />
+          <field name="colour" style="font-weight:Bold;text-align:center"/>
+          <field name="size" style="font-weight:Bold;text-align:center"/>
+          <field name="department"/>
+          <!-- <field name="sub_department" /> -->
+        </xpath>
+        <xpath expr="//notebook/page/field[@name='line_ids']/tree/field[@name='analytic_account_id']" position="replace">
+          <field name="analytic_account_id" optional="hide"/> 
+        </xpath>
+        <xpath expr="//notebook/page/field[@name='line_ids']/tree/field[@name='analytic_tag_ids']" position="replace">
+          <field name="analytic_tag_ids" optional="hide"/> 
+        </xpath>
+        <xpath expr="//notebook/page/field[@name='line_ids']/tree/field[@name='estimated_cost']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//notebook/page/field[@name='line_ids']/tree/field[@name='company_id']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//notebook/page/field[@name='line_ids']/tree/field[@name='purchased_qty']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//notebook/page/field[@name='line_ids']/tree/field[@name='purchase_state']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//group/field[@name='origin']" position="before">
+          <field name="test" invisible="1"/>
+          <field name="count" invisible="1"/>
+          <!-- <field name="request_detail_id" attrs="{'readonly': [('state', 'not in', ('draft'))]}"/> -->
+          <field name="story_id" attrs="{'readonly': [('state', 'not in', ('draft'))]}"/>
+        </xpath>
+        <xpath expr="//field[@name='origin']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//field[@name='description']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//field[@name='group_id']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//notebook/page/field[@name='line_ids']" position="after">
+          <group string="SPECIFIC">
+            <field name="spec" nolabel="1" placeholder="Detail Measurement ....." />
+          </group>
+        </xpath>
+        <xpath expr="//notebook/page/field[@name='line_ids']" position="after">
+          <group string="FIT NOTES">
+            <field name="notes" nolabel="1" placeholder="Comments ....." />
+          </group>
+        </xpath>
+        <xpath expr="//button[@name='button_rejected']" position="attributes">
+          <attribute name="invisible">1</attribute> 
+        </xpath>
+        <xpath expr="//button[@name='button_to_approve']" position="attributes">
+          <attribute name="attrs">{'invisible':['|',('count', '&lt;', 3)]}</attribute>
+        </xpath>
+        <xpath expr="//header" position="inside">
+          <button 
+            name="button_done" 
+            states="draft"
+            type="object" 
+            string="Pending Order"
+            style="background-color:#3366cc; border-color:#3366cc"
+            class="oe_highlight"
+            attrs="{'invisible': ['|','|',('count', '=', 0),('count', '&gt;=', 3)]}"
+          />
+        </xpath>
+        <xpath expr="//header" position="inside">
+          <button 
+            name="button_to_pattern" 
+            states="draft"
+            type="object" 
+            string="Pattern Alteration"
+            class="oe_highlight"
+            attrs="{'invisible': ['|',('count', '&gt;=', 3)]}"
+            style="background-color:#ff9900; border-color:#ff9900"
+          />
+        </xpath>
+        <xpath expr="//group/group[3]" position="after">
+          <group >
+            <field name="status_of_sample" />
+            <field name="thread_type" />
+            <field name="thread_color" />
+            <field name="hanging_tape" />
+          </group>
+        </xpath>
+        <xpath expr="//header" position="inside">
+          <button 
+            name="button_to_pattern" 
+            states="approved"
+            type="object" 
+            string="Pattern Alteration"
+            class="oe_highlight"
+            style="background-color:#ff9900; border-color:#ff9900"
+            attrs="{'invisible': [('state', 'not in', ('approved'))]}"
+          />
+        </xpath>
+        <xpath expr="//button[@name='button_approved']" position="after">
+          <button name="create_pattern_alteration" type="object" string="Create Pattern Alteration" class="oe_highlight" attrs="{'invisible': ['|', ('state', 'not in', ('rejected')), ('test', '=', True)]}"/>
+        </xpath>
+        <xpath expr="//div[@class='oe_button_box']" position="inside">
+          <button type="object" name="view_pattern_alteration" class="oe_stat_button" icon="fa-align-justify" attrs="{'invisible': [('pattern_count', '=', 0)]}">
+            <field name='pattern_count' widget="statinfo" string='Pattern Alteration'/>
+          </button>
+        </xpath>
+        <xpath expr="//notebook//page[1]" position="after">
+          <page string="Custom Pattern" attrs="{'invisible': [('test', '=', False)]}">
+            <group >
+              <group>
+                <field name="pattern_marker" />
+                <field name="size_approve" />
+              </group>
+              <group>
+                <field name="sample_size" />
+                <field name="fabric_width" />
+                <field name="pattern_time" widget="float_time"/>
+              </group>
+              <group>
+                <field name="consumption" />
+                <field name="pattern_cost" />
+              </group>
+            </group>
+            <group >
+              <group string="ALTERATION COMMENT">
+                <field name="alt_cmnt" nolabel="1" placeholder="Comments ....." />
+              </group>
+            </group>
+          </page>
+        </xpath>
+
+        <xpath expr="//notebook//page[2]" position="after">
+          <page string="Seams and Grading" >
+            <group>
+              <field name="seams" placeholder="Comment ..."/>
+            </group>
+            <group>
+              <field name="grading_intructions" placeholder="Comment ..." />
+            </group>
+            <group>
+              <field name="fit_changes" placeholder="Comment ..."/>
+            </group>
+          </page>
+        </xpath>
+
+        <xpath expr="//notebook//page[3]" position="after">
+          <page string="Label Hardware" >
+            <field name="label_hardware_ids">
+              <tree editable="bottom">
+                <field name="description" />
+                <field name="color" />
+                <field name="qty_label" />
+              </tree>
+              <form>
+                <group>
+                  <field name="description" />
+                  <field name="color" />
+                  <field name="qty_label" />
+                </group>
+              </form>
+            </field>
+          </page>
+        </xpath>
+
+        <xpath expr="//notebook//page[4]" position="after">
+          <page string="Label Dress">
+            <field name="label_dress_ids">
+              <tree editable="bottom">
+                <field name="brand" />
+                <field name="image" widget="image" class="oe_avatar"/>
+                <field name="comment" />
+              </tree>
+              <form>
+                <group>
+                  <field name="brand" />
+                  <field name="image" widget="image" class="oe_avatar" />
+                  <field name="comment" />
+                </group>
+              </form>
+            </field>
+          </page>
+        </xpath>
+
+        <xpath expr="//notebook//page[5]" position="after">
+          <page string="Production Summary">
+            <field name="prod_summ_ids">
+              <tree editable="bottom">
+                <field name="summary" />
+                <field name="description" />
+              </tree>
+              <form>
+                <group>
+                  <field name="summary" />
+                  <field name="description" />
+                </group>
+              </form>
+            </field>
+          </page>
+        </xpath>
+
+        <xpath expr="//button[@name='button_draft']" position="attributes">
+          <attribute name="groups">sol_purchase.group_cancel_set_draft</attribute>
+        </xpath>
+
+      </field>
+    </record>
+
+    <record id="view_purchase_request_line_tree_inherit_purchase_request_line" model="ir.ui.view">
+      <field name="name">purchase.request.line.view.form.inherit</field>
+      <field name="model">purchase.request.line</field>
+      <field name="inherit_id" ref="purchase_request.purchase_request_line_tree"/>
+      <field name="arch" type="xml">
+        <field name="request_state" position="after">
+          <field name="view_story" />
+        </field>
+      </field>
+    </record>
+
+    <record id="purchase_request_line_search_inherit" model="ir.ui.view">
+      <field name="name">purchase.request.line.search.view.form.inherit</field>
+      <field name="model">purchase.request.line</field>
+      <field name="inherit_id" ref="purchase_request.purchase_request_line_search"/>
+      <field name="arch" type="xml">
+        <xpath expr="//search" position="inside">
+          <field name="view_story"  string="Story"/>
+        </xpath>
+      </field>
+    </record>
+
+  
+
+
+  </data>
+</odoo>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <record id="original_sample_view_tree" model="ir.ui.view">
+      <field name="name">original.sample.view.tree</field>
+      <field name="model">original.sample</field>
+      <field name="arch" type="xml">
+        <tree string="Original Sample Register">
+          <field name="ref"/>
+          <field name="name" />
+          <field name="date_in" />
+          <field name="date_out" />
+          <field name="balance" />
+          <field
+            name="state"
+            widget="badge"
+            decoration-success="state in ('done')"
+            />
+        </tree>
+      </field>
+    </record>
+
+    <record id="original_sample_view_form" model="ir.ui.view">
+      <field name="name">original.sample.view.form</field>
+      <field name="model">original.sample</field>
+      <field name="arch" type="xml">
+        <form string="Original Sample Story">
+          <header>
+            <button string="Convert to Sample Master" name="convert_master_product" type="object" class="oe_highlight" style="background-color:#ff00ff; border-color:#ff00ff"/>
+            <field
+              name="state"
+              widget="statusbar"
+              statusbar_visible="draft,done"
+              
+            />
+          </header>
+          <sheet>
+            <div class="oe_button_box" name="button_box">
+              <button type="object" name="compute_sisa_stock" class="oe_stat_button" icon="fa-cubes" readonly="1">
+                <div class="o_field_widget o_stat_info">
+                  <span class="o_stat_value" widget="statinfo">
+                    <field name="balance" widget="statinfo" nolabel="1" class="mr4"/>
+                  </span>
+                  <span class="o_stat_text">Balance</span>
+                </div>
+              </button>
+            </div>
+            <field name="photo" widget="image" class="oe_right" options="{'size': [200, 200]}" />
+            <div class="oe_title">
+              <h1>
+                <field name="ref" readonly="1" />
+              </h1>
+            </div>
+            <div class="oe_title">
+              <label for="name" string="Product Name"/>
+              <h2>
+                <div class="d-flex">
+                  <field class="text-break" name="name" placeholder="e.g. DRESS"/>
+                </div>
+              </h2>
+            </div>
+            <group col="4">
+              <field name="date_in" required="1"/>
+              <field name="date_out" />
+              <field name="qty_in" />
+              <field name="qty_out" />
+            </group>
+            <group>
+              <group>
+                <field name="sample_origin" />
+                <field name="department" />
+                <field name="currency_id" invisible="1"/>
+                <field name="original_price" widget="monetary" />
+                <field name="uom_id" invisible="1" />
+              </group>
+            </group>
+            <group col="4">
+              <field colspan="4" name="note" />
+            </group>
+            <notebook>
+              <page string="Original Size" >
+                <field name="line_attribute_ids" widget="one2many" context="{'show_attribute': False}" required="1" >
+                  <tree string="Variants" editable="bottom" >
+                    <field name="attribute_id" attrs="{'readonly': [('id', '!=', False)]}"/>
+                    <field name="value_ids" widget="many2many_tags" options="{'no_create_edit': True, 'color_field': 'color'}" 
+                      context="{'show_attribute': False}"
+                      />
+                  </tree>
+                </field>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    
+    <record id="original_sample_action" model="ir.actions.act_window">
+      <field name="name">Original Sample Register</field>
+      <field name="res_model">original.sample</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+      id="original_sample_menu"
+      name="Original Sample Register"
+      action="sol_purchase.original_sample_action"
+      parent="purchase_request.parent_menu_purchase_request"
+      sequence="1"/>
+
+  </data>
+</odoo>
