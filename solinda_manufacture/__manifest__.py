@@ -27,9 +27,11 @@
         'security/security.xml',
         'security/ir.model.access.csv',
         'views/purchase.xml',
+        'views/purchase_request.xml',
         'views/company.xml',
         'views/mrp_breakdown.xml',
         'views/mrp_production.xml',
+        'views/stock_move.xml',
         'views/templates.xml',
     ],
     # only loaded in demonstration mode

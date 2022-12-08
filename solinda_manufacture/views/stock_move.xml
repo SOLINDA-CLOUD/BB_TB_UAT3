@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <data>
+
+    <record id="view_move_line_workorder_mrp_form" model="ir.ui.view">
+      <field name="name">view.move.line.workorder.mrp.form</field>
+      <field name="model">stock.move.line</field>
+      <field name="inherit_id" ref="stock.view_move_line_form"/>
+      <field name="arch" type="xml">
+
+        <xpath expr="//form/sheet/group" position="after">
+          <group name="workorder_group" string="Work Orders" colspan="2" attrs="{'invisible': [('workorder_ids', '=', [])]}">
+              <field name="workorder_ids" string="Work Orders" nolabel="1" readonly="1">
+                  <tree editable="bottom">
+                      <field name="name" string="Operation"/>
+                      <field name="workcenter_id"/>
+                      <field name="production_id"/>
+                      <field name="order_id"/>
+                      <field name="supplier"/>
+                      <field name="fabric_id"/>
+                      <field name="color_id"/>
+                      <field name="hk"/>
+                      <field name="shrinkage"/>
+                      <field name="out_date"/>
+                      <field name="in_date"/>
+                      <field name="total_dyeing"/>
+                      <field name="product_id" optional="show"/>
+                      <field name="state" attrs="{'invisible': [('production_state', '=', 'draft')]}"/>
+                      <field name="production_state" invisible="1"/>
+                  </tree>
+        
+              </field>
+          </group>
+        </xpath>
+
+      </field>
+    </record>
+
+  </data>
+</odoo>

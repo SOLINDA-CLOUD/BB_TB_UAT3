@@ -38,5 +38,9 @@ class MrpProduction(models.Model):
     _inherit = 'mrp.production'
 
     by_product_ids = fields.One2many('by.product.dummy', 'mrp_id', string='By Product')
+    purchase_request_id = fields.Many2one('purchase.request', string='Sample Development')
+    is_sample = fields.Boolean('Is Sample')
+
+
     
     

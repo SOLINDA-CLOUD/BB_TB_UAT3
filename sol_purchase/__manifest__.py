@@ -36,6 +36,7 @@
         'views/data_master_story.xml',
         'views/original_sample.xml',
         'views/product_menuitem.xml',
+        'views/record_rule.xml',
         # 'views/templates.xml',
         'views/sequence_data.xml',
     ],
