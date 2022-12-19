@@ -17,16 +17,55 @@
             <field name="dpi">90</field>
         </record>
         
-        <record id="action_report_purchase_order" model="ir.actions.report">
-            <field name="name">Report - Purchase Order</field>
+        <record id="action_report_production" model="ir.actions.report">
+            <field name="name">Report - Production Order BB</field>
             <field name="model">purchase.order</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">sol_purchase.report_po</field>
             <field name="report_file">sol_purchase.report_po</field>
             <field name="paperformat_id" ref="sol_purchase.report_paperformat_a4_landscape_quotation_gls" />
-            <field name="print_report_name">'PO - %s' % object.name</field>
+            <field name="print_report_name">'PRODUCTION ORDER - %s' % object.name</field>
             <field name="binding_model_id" ref="purchase.model_purchase_order"/>
             <field name="binding_type">report</field>
+        </record>
+
+        <record id="action_report_sample_po" model="ir.actions.report">
+            <field name="name">Report - PO Sample</field>
+            <field name="model">purchase.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">sol_purchase.report_sample_po</field>
+            <field name="report_file">sol_purchase.report_sample_po</field>
+            <field name="paperformat_id" ref="sol_purchase.report_paperformat_a4_landscape_quotation_gls" />
+            <field name="print_report_name">'PO SAMPLE - %s' % object.name</field>
+            <field name="binding_model_id" ref="purchase.model_purchase_order"/>
+            <field name="binding_type">report</field>
+            <field name="groups_id" eval="[(4, ref('sol_purchase.group_report_tb'))]"/>
+        </record>
+
+        <record id="action_report_production_po" model="ir.actions.report">
+            <field name="name">Report - PO Production</field>
+            <field name="model">purchase.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">sol_purchase.report_production_po</field>
+            <field name="report_file">sol_purchase.report_production_po</field>
+            <field name="paperformat_id" ref="sol_purchase.report_paperformat_a4_landscape_quotation_gls" />
+            <field name="print_report_name">'PO PRODUCTION - %s' % object.name</field>
+            <field name="binding_model_id" ref="purchase.model_purchase_order"/>
+            <field name="binding_type">report</field>
+            <field name="groups_id" eval="[(4, ref('sol_purchase.group_report_tb'))]"/>
+        </record>
+
+        <record id="report_action_production_order_tb" model="ir.actions.report">
+            <field name="name">Report - PO Material</field>
+            <field name="model">purchase.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">sol_purchase.production_order_tb</field>
+            <field name="report_file">sol_purchase.production_order_tb</field>
+            <field name="paperformat_id" ref="solinda_mrp.report_paperformat_a4_portrait_costing_product_tb" />
+            <field name="print_report_name">'PO MATERIAL - %s' % object.name</field>
+            <field name="binding_model_id" ref="purchase.model_purchase_order"/>
+            <field name="binding_type">report</field>
+            <field name="groups_id" eval="[(4, ref('sol_purchase.group_report_tb'))]"/>
         </record>
     
     </data>

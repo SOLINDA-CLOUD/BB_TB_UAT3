@@ -94,17 +94,6 @@
                                         <t t-esc="doc.customer.name"/>
                                     </td>
                                     <td style="width: 6%; height: 18px;"></td>
-                                    <td style="width: 15%; height: 18px;">Color</td>
-                                    <td style="width: 2%; height: 18px; text-align: center;">:</td>
-                                    <td style="width: 35%; height: 18px;">
-                                        <!-- <t t-esc="doc.color.name"/> -->
-                                    </td>
-                                </tr>
-                                <tr style="height: 18px;">
-                                    <td style="width: 15%; height: 18px;"></td>
-                                    <td style="width: 2%; height: 18px;"></td>
-                                    <td style="width: 25%; height: 18px;"></td>
-                                    <td style="width: 6%; height: 18px;"></td>
                                     <td style="width: 15%; height: 18px;">Group</td>
                                     <td style="width: 2%; height: 18px; text-align: center;">:</td>
                                     <td style="width: 35%; height: 18px;">
@@ -203,7 +192,9 @@
                                             <t t-esc="op.workcenter_id.name"/>
                                         </td>
                                         <td style="width: 24%; border: 1px solid black;">
-                                            <t t-esc="op.fabric_id.product_id.name"/>
+                                            <t t-foreach="op.fabric_id" t-as="line">
+                                                <span t-esc="line.product_id.name"/>
+                                            </t>
                                         </td>
                                         <td style="width: 18%; text-align: center; border: 1px solid black;">
                                             <t t-esc="op.color_id.name"/>
@@ -321,21 +312,6 @@
                                                         <t t-esc="doc.total_cost" t-options="{'widget': 'monetary','display_currency': res_company.currency_id}"/>
                                                     </td>
                                                 </tr>
-                                                <!-- <tr style="height: 18px;">
-                                                    <td style="width: 53.6458%; text-align: right; height: 18px;">Total IDR</td>
-                                                    <td style="width: 5.98955%; text-align: center; height: 18px;">:</td>
-                                                    <td style="width: 40.3645%; text-align: right; height: 18px;">1.0###</td>
-                                                </tr> -->
-                                                <!-- <tr style="height: 18px;">
-                                                    <td style="width: 53.6458%; text-align: right; height: 18px;">Landed Cost</td>
-                                                    <td style="width: 5.98955%; text-align: center; height: 18px;">:</td>
-                                                    <td style="width: 40.3645%; text-align: right; height: 18px;">-</td>
-                                                </tr>
-                                                <tr style="height: 18px;">
-                                                    <td style="width: 53.6458%; text-align: right; height: 18px;">Landed Quoted</td>
-                                                    <td style="width: 5.98955%; text-align: center; height: 18px;">:</td>
-                                                    <td style="width: 40.3645%; text-align: right; height: 18px;">-</td>
-                                                </tr> -->
                                             </tbody>
                                         </table>
                                     </td>

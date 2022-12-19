@@ -34,25 +34,13 @@
             <field name="dpi">90</field>
         </record>
 
-        <record id="report_costing_product_action" model="ir.actions.report">
-            <field name="name">Costing Product/Harga</field>
-            <field name="model">mrp.bom</field>
-            <field name="report_type">qweb-pdf</field>
-            <field name="report_name">solinda_mrp.report_costing_product</field>
-            <field name="report_file">solinda_mrp.costing_product</field>
-            <field name="paperformat_id" ref="solinda_mrp.report_paperformat_a4_portrait_costing_product_tb" />
-            <field name="print_report_name">'CRP - %s' % object.name</field>
-            <field name="binding_model_id" ref="mrp.model_mrp_bom"/>
-            <field name="binding_type">report</field>
-        </record>
-
         <record id="report_production_detail_action" model="ir.actions.report">
             <field name="name">Production Detail</field>
             <field name="model">mrp.production</field>
             <field name="report_type">qweb-pdf</field>
-            <field name="report_name">solinda_mrp.report_production_detail</field>
-            <field name="report_file">solinda_mrp.production_detail</field>
-            <field name="paperformat_id" ref="solinda_mrp.report_paperformat_a4_landscape_production_detail_tb" />
+            <field name="report_name">solinda_manufacture.report_production_detail</field>
+            <field name="report_file">solinda_manufacture.production_detail</field>
+            <field name="paperformat_id" ref="solinda_manufacture.report_paperformat_a4_landscape_production_detail_tb" />
             <field name="print_report_name">'PRD - %s' % object.name</field>
             <field name="binding_model_id" ref="mrp.model_mrp_production"/>
             <field name="binding_type">report</field>
@@ -62,9 +50,9 @@
             <field name="name">Sample Detail</field>
             <field name="model">mrp.production</field>
             <field name="report_type">qweb-pdf</field>
-            <field name="report_name">solinda_mrp.report_sample_detail</field>
-            <field name="report_file">solinda_mrp.sample_detail</field>
-            <field name="paperformat_id" ref="solinda_mrp.report_paperformat_a4_landscape_production_detail_tb" />
+            <field name="report_name">solinda_manufacture.report_sample_detail</field>
+            <field name="report_file">solinda_manufacture.sample_detail</field>
+            <field name="paperformat_id" ref="solinda_manufacture.report_paperformat_a4_landscape_production_detail_tb" />
             <field name="print_report_name">'PRD - %s' % object.name</field>
             <field name="binding_model_id" ref="mrp.model_mrp_production"/>
             <field name="binding_type">report</field>

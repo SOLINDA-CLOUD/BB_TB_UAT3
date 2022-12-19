@@ -44,6 +44,11 @@
                 <field name="sizes" />
                 <field name="ratio" />
             </xpath>
+
+            <xpath expr="//notebook/page/field/tree/field[@name='product_id']" position="attributes">
+                <attribute name="domain">['|','|',('categ_id.name','ilike','Raw Material'),('categ_id.name','ilike','ACCESSORIES'),('categ_id.parent_id.name','ilike','ACCESSORIES')]</attribute>
+            </xpath>
+
             <xpath expr="//notebook/page/field/tree/button[@name='action_see_attachments']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
@@ -58,6 +63,33 @@
             </xpath>
             <xpath expr="//group/group/field[@name='product_id']" position="attributes">
                 <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//notebook/page[1]" position="after">
+                <page string="Material Variant" name="variant_components">
+                    <field name="bom_line_variant_ids" widget="one2many">
+                         <tree string="Variant Material" editable="bottom" create="false">
+                            <field name="company_id" invisible="1"/>
+                            <field name="sequence" widget="handle"/>
+                            <field name="product_id" context="{'default_detailed_type': 'product'}" readonly="1" force_save="1"/>
+                            <field name="supplier" readonly="1" force_save="1"/>
+                            <field name="color" />
+                            <field name="sizes" readonly="1" force_save="1"/>
+                            <field name="ratio"/>
+                            <field name="product_tmpl_id" invisible="1"/>
+                            <button name="action_see_attachments" type="object" icon="fa-files-o" aria-label="Product Attachments" title="Product Attachments" class="float-right oe_read_only" invisible="1"/>
+                            <field name="attachments_count" class="text-left oe_read_only" string=" " invisible="1"/>
+                            <field name="product_qty"/>
+                            <field name="product_uom_category_id" invisible="1"/>
+                            <field name="parent_product_tmpl_id" invisible="1"/>
+                            <field name="product_uom_id" options="{'no_open':True,'no_create':True}" groups="uom.group_uom" readonly="1" force_save="1"/>
+                            <field name="possible_bom_product_template_attribute_value_ids" invisible="1"/>
+                            <field name="bom_product_template_attribute_value_ids" optional="hide" widget="many2many_tags" options="{'no_create': True}" attrs="{'column_invisible': [('parent.product_id', '!=', False)]}" groups="product.group_product_variant" readonly="1" force_save="1"/>
+                            <field name="allowed_operation_ids" invisible="1"/>
+                            <field name="operation_id" groups="mrp.group_mrp_routings" optional="hidden" attrs="{'column_invisible': [('parent.type','not in', ('normal', 'phantom'))]}" options="{'no_quick_create':True,'no_create_edit':True}" readonly="1" force_save="1"/>
+                        </tree>
+                    </field>
+                </page>
             </xpath>
         </field>
     </record>

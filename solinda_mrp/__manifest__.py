@@ -29,12 +29,13 @@
         'views/mrp_routing_views.xml',
         'views/mrp_bom_views.xml',
         'views/tender_bom.xml',
-        'views/mrp_production_views.xml',
-        'views/mrp_workorder_views.xml',
+        # 'views/mrp_production_views.xml',
+        # 'views/mrp_workorder_views.xml',
         'views/mrp_workcenter_views.xml',
         'report/action_report.xml',
         'report/costing_product.xml',
-        'report/production_detail.xml',
+        # 'report/production_detail.xml',
+        # 'report/sample_detail.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

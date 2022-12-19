@@ -13,3 +13,5 @@ access_label_comp,sol_purchase.label_comp,model_label_comp,base.group_user,1,1,1
 access_data_master_story,sol_purchase.data_master_story,model_data_master_story,base.group_user,1,1,1,1
 access_original_sample,sol_purchase.original_sample,model_original_sample,base.group_user,1,1,1,1
 access_attribute_line,sol_purchase.attribute_line,model_attribute_line,base.group_user,1,1,1,1
+access_product_workorder,sol_purchase.product_workorder,model_product_workorder,base.group_user,1,1,1,1
+

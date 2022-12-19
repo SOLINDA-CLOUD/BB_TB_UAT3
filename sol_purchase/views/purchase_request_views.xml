@@ -175,7 +175,7 @@
             <field name="label_hardware_ids">
               <tree editable="bottom">
                 <field name="description" />
-                <field name="color" />
+                <field name="color_id" />
                 <field name="qty_label" />
               </tree>
               <form>
@@ -254,7 +254,19 @@
       </field>
     </record>
 
-  
+    <record id="purchase_request_view_tree" model="ir.ui.view">
+      <field name="name">purchase.request.view.tree.inherit</field>
+      <field name="model">purchase.request</field>
+      <field name="inherit_id" ref="purchase_request.view_purchase_request_tree"/>
+      <field name="arch" type="xml">
+        <xpath expr="//tree/field[@name='name']" position="after">
+          <field name="name_source" />
+        </xpath>
+        <xpath expr="//tree/field[@name='origin']" position="attributes">
+          <attribute name="optional" separator="" add="" remove="" value="">hide</attribute>
+        </xpath>
+      </field>
+    </record>
 
 
   </data>

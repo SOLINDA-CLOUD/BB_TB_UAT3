@@ -16,8 +16,10 @@
                     icon="fa-folder-open-o"
                 />
             </xpath>
+
         </field>
     </record>
+
     <record id="purchase_order_line_form2" model="ir.ui.view">
         <field name="name">purchase.order.line.form2</field>
         <field name="model">purchase.order.line</field>

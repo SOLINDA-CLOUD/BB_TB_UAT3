@@ -2,3 +2,4 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 solinda_mrp.access_sizes,access_sizes,solinda_mrp.model_sizes,base.group_user,1,1,1,1
 solinda_mrp.access_dpt_color,access_dpt_color,solinda_mrp.model_dpt_color,base.group_user,1,1,1,1
 solinda_mrp.tender_bom,tender_bom,solinda_mrp.model_tender_bom,base.group_user,1,1,1,1
+solinda_mrp.mrp_bom_line_variant,mrp_bom_line_variant,solinda_mrp.model_mrp_bom_line_variant,base.group_user,1,1,1,1

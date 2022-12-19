@@ -25,7 +25,7 @@
             </div>
         </div>
     </template>
-    <template id="report_production_detail">
+    <template id="report_sample_detail">
         <t t-call="web.basic_layout">
             <div class="page">
                 <t t-foreach="docs" t-as="doc">
@@ -37,7 +37,7 @@
                                 <tr>
                                     <td style="width: 50%;">
                                         <h2>
-                                            <span style="text-decoration: underline;">PRODUCTION DETAIL</span>
+                                            <span style="text-decoration: underline;">SAMPLE DETAIL</span>
                                         </h2>
                                     </td>
                                     <td style="width: 50%; text-align: right;">
@@ -142,7 +142,7 @@
                                             <t t-esc="doc.total_qty"/>
                                         </td>
                                         <td style="width: 7%; height: 18px; text-align: right; border: 1px solid black;">
-                                            <t t-esc="move.product_id.standard_price"/>
+                                            <t t-esc="move.product_id.standard_price" t-options="{'widget': 'monetary','display_currency': res_company.currency_id}"/>
                                         </td>
                                         <td style="width: 5%; height: 18px; text-align: center; border: 1px solid black;">
                                             <t t-esc="move.product_uom.name"/>
@@ -157,7 +157,7 @@
                                         </td>
                                         <td style="width: 5%; height: 18px; text-align: right; border: 1px solid black;">-</td>
                                         <td style="width: 7%; height: 18px; text-align: right; border: 1px solid black;">
-                                            <t t-esc="move.total_cost"/>
+                                            <t t-esc="move.total_cost" t-options="{'widget': 'monetary','display_currency': res_company.currency_id}"/>
                                         </td>
                                     </tr>
                                 </t>
@@ -185,7 +185,7 @@
                                             <t t-esc="work.hk"/>
                                         </td>
                                         <td style="width: 3%; height: 18px; text-align: right; border: 1px solid black;">
-                                            <t t-esc="doc.total_qty"/>
+                                            <t t-esc="work.qty_production"/>
                                         </td>
                                         <td style="width: 7%; height: 18px; text-align: right; border: 1px solid black;">
                                             <t t-esc="work.cost_service" t-options="{'widget': 'monetary','display_currency': res_company.currency_id}"/>
@@ -198,7 +198,7 @@
                                         </td>
                                         <td style="width: 5%; height: 18px; text-align: right; border: 1px solid black;">
                                             <t t-set="total" t-value="work.hk * work.qty_production"/>
-                                            <t t-esc="total"/>
+                                            <t t-esc="total" />
                                         </td>
                                         <td style="width: 5%; height: 18px; text-align: right; border: 1px solid black;">-</td>
                                         <td style="width: 5%; height: 18px; text-align: right; border: 1px solid black;">-</td>
@@ -223,7 +223,7 @@
                                     <td style="width: 5%; text-align: right; border: 1px solid black;"></td>
                                     <td style="width: 7%; text-align: right; border: 1px solid black;">
                                         <strong>
-                                            <t t-esc="doc.total_cost"/>
+                                            <t t-esc="doc.total_cost" t-options="{'widget': 'monetary','display_currency': res_company.currency_id}"/>
                                         </strong>
                                     </td>
                                 </tr>
@@ -325,10 +325,6 @@
                             </tbody>
                         </table>
                     </div>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
                     <div class="container">
                         <div class="row">
                             <div class="col-sm">

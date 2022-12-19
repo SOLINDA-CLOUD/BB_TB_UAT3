@@ -6,4 +6,12 @@
         <field name="name">Pattern Alteration Cancel/Set Draft Group</field>
     </record>
 
+    <!-- <record model="ir.module.category" id="module_category_purchase_order">
+        <field name="name">Report Action</field>
+        <field name="parent_id" ref="base.module_category_purchase_management" />
+        <field name="sequence">11</field>
+    </record> -->
+
+
+
 </odoo>

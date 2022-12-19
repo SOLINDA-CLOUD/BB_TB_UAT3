@@ -14,6 +14,7 @@
           <attribute name="readonly">1</attribute>
         </xpath> -->
         <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="after">
+          <field name="image" widget="image" class="oe_avatar"/>
           <field name="fabric_por" optional="show" />
           <field name="lining_por" optional="show" />
           <!-- <field name="color" optional="hide" /> -->
@@ -23,29 +24,55 @@
           <!-- <field name="type" /> -->
         </xpath>
         <xpath expr="//field[@name='order_line']/tree/field[@name='price_subtotal']" position="after">
-          <field name="prod_comm" />
-          <field name="image" widget="image" class="oe_avatar"/>
+          <field name="prod_comm" attrs="{'invisible': [('comment_bool', '=', True)]}"/>
+          <field name="comment_bool" invisible="1" />
         </xpath>
         <xpath expr="//notebook//page[1]" position="after">
-          <page string="Additional Information" attrs="{'invisible': [('company_id', '=', 1)]}">
+          <page string="Additional Information">
             <group>
-              <field name="attention" />
-              <field name="sub_suplier" />
-              <field name="brand" />
-              <field name="buyer" />
+              <group>
+                <field name="attention" />
+                <field name="sub_suplier" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                <field name="brand" />
+                <field name="buyer" />
+              </group>
+              <group string="Signature Naming">
+                <field name="prepared" />
+                <field name="ordered" />
+                <field name="approved" />
+              </group>
             </group>
+          </page>
+        </xpath>
+        <xpath expr="//notebook" position="inside">
+          <page string="Product Variant From MO">
+            <field name="pw_ids" widget="one2many">
+              <tree delete="0" create="0" editable="top">
+                <field name="name" readonly="1"/>
+                <field name="fabric" readonly="1" />
+                <field name="lining" readonly="1" />
+                <field name="color" readonly="1" />
+                <field name="size" readonly="1" />
+                <field name="product_qty" readonly="1" />
+                <field name="price_unit" readonly="1"/>
+                <field name="image" widget="image" class="oe_avatar" readonly="1" />
+                <field name="sample_comment" />
+              </tree>
+            </field>
           </page>
         </xpath>
         <xpath expr="//field[@name='picking_type_id']" position="before">
           <field name="supplier_po" attrs="{'invisible': [('company_id', '=', 1)]}"/>
+          <field name="sample_order_no" />
           <!-- <field name="po" attrs="{'invisible': [('company_id', '=', 1)]}"/> -->
-          <label for="ordering_date" attrs="{'invisible': [('company_id', '=', 1)]}"/>
+          <!-- <label for="ordering_date" attrs="{'invisible': [('company_id', '=', 1)]}"/>
           <div class="o_row" attrs="{'invisible': [('company_id', '=', 1)]}">
             <field name="ordering_date" placeholder="Start Date" />
  -
             <field name="delivery_date" placeholder="End Date" />
-          </div>
+          </div> -->
         </xpath>
+        
 
       </field>
     </record>

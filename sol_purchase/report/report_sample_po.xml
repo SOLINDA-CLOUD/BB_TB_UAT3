@@ -13,7 +13,7 @@
     </template>
 
 
-    <template id="report_po">
+    <template id="report_sample_po">
       <t t-call="web.basic_layout">
         <t t-foreach="docs" t-as="doc">
                 
@@ -27,7 +27,7 @@
                 </div>
               </div>
             </header>
-            <h2 style="text-align: left; text-decoration: underline;">PRODUCTION ORDER</h2>
+            <h2 style="text-align: left; text-decoration: underline;">SAMPLE PO</h2>
             <table
                 style="table-layout: fixed; border-collapse: collapse; width: 100%; height: 144px;">
                 <tbody style="font-size: 15px;">
@@ -38,7 +38,7 @@
                           <t t-esc="doc.name"/>
                         </td>
                         <td style="width: 6.01553%; height: 18px;"></td>
-                        <td style="width: 22.2605%; height: 18px;">Production Order No</td>
+                        <td style="width: 22.2605%; height: 18px;">Sample Order No</td>
                         <td style="width: 2.08768%; height: 18px;">:</td>
                         <td style="width: 32.0241%; height: 18px;">
                           <t t-esc="doc.sample_order_no"/>
@@ -166,7 +166,7 @@
                         </td>
                         <td
                             style="width: 13.9312%; text-align: center; border: 1px solid black; padding-top: 7px;">
-                            <strong>Production Comment</strong>
+                            <strong>Sample Comment</strong>
                         </td>
                     </tr>
                 </thead>

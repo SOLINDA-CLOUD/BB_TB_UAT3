@@ -139,25 +139,25 @@
                                             <t t-esc="move.hk"/>
                                         </td>
                                         <td style="width: 3%; height: 18px; text-align: right; border: 1px solid black;">
-                                            <t t-esc="doc.total_qty"/>
+                                            <t t-esc="move.product_uom_qty"/>
                                         </td>
                                         <td style="width: 7%; height: 18px; text-align: right; border: 1px solid black;">
-                                            <t t-esc="move.product_id.standard_price"/>
+                                            <t t-esc="move.product_id.standard_price" t-options="{'widget': 'monetary','display_currency': res_company.currency_id}"/>
                                         </td>
                                         <td style="width: 5%; height: 18px; text-align: center; border: 1px solid black;">
                                             <t t-esc="move.product_uom.name"/>
                                         </td>
                                         <td style="width: 5%; height: 18px; text-align: right; border: 1px solid black;">-</td>
                                         <td style="width: 5%; height: 18px; text-align: right; border: 1px solid black;">
-                                            <t t-set="total" t-value="move.hk * doc.product_qty"/>
+                                            <t t-set="total" t-value="move.hk * move.product_uom_qty"/>
                                             <t t-esc="total"/>
                                         </td>
                                         <td style="width: 5%; height: 18px; text-align: right; border: 1px solid black;">
-                                            <t t-esc="move.total_buy"/>
+                                            <t t-esc="move.total_buy" t-options="{'widget': 'monetary','display_currency': res_company.currency_id}"/>
                                         </td>
                                         <td style="width: 5%; height: 18px; text-align: right; border: 1px solid black;">-</td>
                                         <td style="width: 7%; height: 18px; text-align: right; border: 1px solid black;">
-                                            <t t-esc="move.total_cost"/>
+                                            <t t-esc="move.total_cost" t-options="{'widget': 'monetary','display_currency': res_company.currency_id}"/>
                                         </td>
                                     </tr>
                                 </t>
@@ -223,7 +223,7 @@
                                     <td style="width: 5%; text-align: right; border: 1px solid black;"></td>
                                     <td style="width: 7%; text-align: right; border: 1px solid black;">
                                         <strong>
-                                            <t t-esc="doc.total_cost"/>
+                                            <t t-esc="doc.total_cost" t-options="{'widget': 'monetary','display_currency': res_company.currency_id}"/>
                                         </strong>
                                     </td>
                                 </tr>
@@ -269,7 +269,7 @@
                                                     <td style="width: 4.81688%; text-align: center; border: 1px solid black;">:</td>
                                                     <td style="width: 84.2118%; text-align: right; border: 1px solid black;">
                                                         <strong>
-                                                            <t t-set="total_whole" t-value="doc.retail_price * doc.product_qty"/>
+                                                            <t t-set="total_whole" t-value="doc.retail_price * doc.total_qty"/>
                                                             <t t-esc="total_whole" t-options="{'widget': 'monetary','display_currency': res_company.currency_id}" />
                                                         </strong>
                                                     </td>
@@ -279,7 +279,7 @@
                                                     <td style="width: 4.81688%; text-align: center; border: 1px solid black;">:</td>
                                                     <td style="width: 84.2118%; text-align: right; border: 1px solid black;">
                                                         <strong>
-                                                            <t t-esc="doc.roi" />
+                                                            <t t-esc="'%.2f'% doc.roi" />
                                                             %
                                                         </strong>
                                                     </td>

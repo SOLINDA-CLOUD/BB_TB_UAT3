@@ -4,15 +4,15 @@
     <record id="mrp_production_inherit_sample_form" model="ir.ui.view">
         <field name="name">mrp.production.inherit.sample.form</field>
         <field name="model">mrp.production</field>
-        <field name="inherit_id" ref="solinda_mrp.mrp_production_inherit_supplier_form"/>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
         <field name="arch" type="xml">
 
             <xpath expr="//field[@name='purchase_id']" position="attributes">
-                  <attribute name="attrs">{'invisible':[('purchase_id','=', False)]}</attribute>
+                <attribute name="attrs">{'invisible':[('purchase_id','=', False)]}</attribute>
             </xpath>
 
             <xpath expr="//field[@name='sales_order_id']" position="attributes">
-                  <attribute name="attrs">{'invisible':[('sales_order_id','=', False)]}</attribute>
+                <attribute name="attrs">{'invisible':[('sales_order_id','=', False)]}</attribute>
             </xpath>
 
             <xpath expr="//field[@name='purchase_id']" position="before">
@@ -20,12 +20,15 @@
                 <field name="purchase_request_id" readonly="1" attrs="{'invisible': [('purchase_request_id', '=', False)]}"/>
             </xpath>
 
-             <xpath expr="//notebook/page/field/tree/button[@name='create_po']" position="attributes">
-                <attribute name="attrs">{'invisible':[('is_available','=', True)]}</attribute>
+            <xpath expr="//notebook/page/field/tree/button[@name='create_po']" position="attributes">
+                <attribute name="attrs">{'invisible':[('forecast_availability', '&gt;=', 0)]}</attribute>
+            </xpath>
+
+            <xpath expr="//notebook/page/field/tree/field[@name='product_id']" position="attributes">
+                <attribute name="domain">['|','|',('categ_id.name','ilike','Raw Material'),('categ_id.name','ilike','ACCESSORIES'),('categ_id.parent_id.name','ilike','ACCESSORIES')]</attribute>
             </xpath>
 
             <xpath expr="//notebook/page/field/tree/field[@name='purchase_id']" position="before">
-                <field name="is_available" invisible="1"/>
                 <field name="product_qty_available" invisible="1"/>
             </xpath>
 
@@ -55,33 +58,187 @@
                         </tree>
                     </field>
                 </page>
+
+                <page string="Material Variant" name="variant_components">
+                    <field name="mrp_bom_variant_ids" readonly="1" widget="one2many">
+                        <tree string="Variant Material" editable="bottom" create="false" edit="false" delete="false" open="false" decoration-success="po_qty &gt; 0">
+                            <field name="company_id" invisible="1"/>
+                            <field name="sequence" widget="handle"/>
+                            <field name="product_id" readonly="1" force_save="1"/>
+                            <field name="supplier" readonly="1" force_save="1"/>
+                            <field name="color" readonly="1" force_save="1"/>
+                            <field name="sizes" readonly="1" force_save="1"/>
+                            <field name="ratio" readonly="1" force_save="1"/>
+                            <field name="po_qty" readonly="1" force_save="1"/>
+                            <field name="product_qty" readonly="1" force_save="1"/>
+                            <field name="total_qty" readonly="1" force_save="1"/>
+                            <field name="product_uom_id" options="{'no_open':True,'no_create':True}" groups="uom.group_uom" readonly="1" force_save="1"/>
+                        </tree>
+                        <form>
+                            <group>
+                                <field name="company_id" invisible="1"/>
+                                <field name="sequence" invisible="1"/>
+                                <field name="product_id" readonly="1" force_save="1"/>
+                                <field name="supplier" readonly="1" force_save="1"/>
+                                <field name="color" readonly="1" force_save="1"/>
+                                <field name="sizes" readonly="1" force_save="1"/>
+                                <field name="ratio" readonly="1" force_save="1"/>
+                                <field name="product_qty" readonly="1" force_save="1"/>
+                                <field name="product_uom_id" options="{'no_open':True,'no_create':True}" groups="uom.group_uom" readonly="1" force_save="1"/>
+                            </group>
+                        </form>
+                    </field>
+                </page>
+            </xpath>
+            <xpath expr="//group/group/field[@name='company_id']" position="after">
+                <field name="total_cost" />
+            </xpath>
+
+            <xpath expr="//notebook/page[@name='components']" position="attributes">
+                <attribute name="string">Material</attribute>
+            </xpath>
+
+            <xpath expr="//notebook/page[@name='finished_products']" position="attributes">
+                <attribute name="groups">base.group_no_one</attribute>
+            </xpath>
+
+            <xpath expr="//notebook/page/field/tree/field[@name='group_id']" position="after">
+                <field name="purchase_id" readonly="1"/>
+                <button name="create_po" type="object" icon="fa-pencil-square-o" string="Create PO" class="oe_highlight btn-success" attrs="{'invisible': [('purchase_id','!=',False)]}"/>
+                <button name="show_po" type="object" icon="fa-eye" string="Show PO" class="oe_highlight btn-success" attrs="{'invisible': [('purchase_id','=',False)]}"/>
+                <button name="show_receive_po" type="object" icon="fa-truck" string="Receive" class="oe_highlight btn-warning" attrs="{'invisible': [('purchase_id','=',False)]}"/>
+            </xpath>
+
+            <xpath expr="//notebook/page/field/tree/field[@name='product_id']" position="after">
+                <field name="supplier" />
+                <!-- <field name="payment" /> -->
+                <!-- <field name="total_mtr" /> -->
+                <field name="total_buy" />
+                <field name="color" />
+                <field name="hk" />
+
+            </xpath>
+            <xpath expr="//group/group/field[@name='product_id']" position="before">
+                <field name="trans_date" />
+                <field name="delivery_date" />
+                <field name="customer" />
+                <field name="product_tmpl_id"/>
+            </xpath>
+            <xpath expr="//field[@name='product_id']" position="attributes">
+                <attribute name="groups">base.group_no_one</attribute>
+                <!-- <attribute name="invisible">1</attribute> -->
+            </xpath>
+            <xpath expr="//div[hasclass('no-gutters')]" position="attributes">
+                <attribute name="groups">base.group_no_one</attribute>
+                <!-- <attribute name="invisible">1</attribute> -->
+            </xpath>
+            <xpath expr="//label[@for='product_qty']" position="attributes">
+                <!-- <attribute name="invisible">1</attribute> -->
+                <attribute name="groups">base.group_no_one</attribute>
+            </xpath>
+            <xpath expr="//group/group/field[@name='company_id']" position="after">
+                <field name="sales_order_id" />
+                <field name="purchase_id"/>
+            </xpath>
+
+            <xpath expr="//field[@name='workorder_ids']" position="replace">
+                <!-- <group> -->
+                <field name="workorder_ids" nolabel="1">
+                    <tree editable="bottom">
+                        <field name="consumption" invisible="1"/>
+                        <field name="company_id" invisible="1"/>
+                        <field name="is_produced" invisible="1"/>
+                        <field name="is_user_working" invisible="1"/>
+                        <field name="product_uom_id" invisible="1" readonly="0"/>
+                        <field name="production_state" invisible="0"/>
+                        <field name="production_bom_id" invisible="1"/>
+                        <field name="qty_producing" invisible="1"/>
+                        <field name="time_ids" invisible="1"/>
+                        <field name="working_state" invisible="1"/>
+                        <field name="operation_id" invisible="1" domain="['|', ('bom_id', '=', production_bom_id), ('bom_id', '=', False)]" context="{'default_workcenter_id': workcenter_id, 'default_company_id': company_id}"/>
+
+                        <field name="name" string="Operation"/>
+                        <!-- additional -->
+                        <field name="order_id" />
+                        <field name="supplier" />
+                        <field name="cost_service" optional="hide" />
+                        <field name="fabric_id" widget="many2many_tags" options="{'no_show':True,'no_create':True,'no_open':True}" string="Material"/>
+                        <!-- <field name="accessories_ids" widget="many2many_tags" options="{'no_show':True,'no_create':True,'no_open':True}"/> -->
+                        <field name="color_id" />
+                        <field name="hk" />
+                        <field name="shrinkage" />
+                        <field name="picking_ids" widget="many2many_tags" optional="hide"/>
+                        <field name="out_date" optional="show"/>
+                        <field name="in_date" optional="show"/>
+                        <!-- additional -->
+
+                        <field name="workcenter_id"/>
+                        <field name="product_id" optional="show"/>
+                        <field name="date_planned_start" optional="hide"/>
+                        <field name="date_planned_finished" optional="hide"/>
+                        <field name="date_start" optional="hide" readonly="1"/>
+                        <field name="date_finished" optional="hide" readonly="1"/>
+                        <field name="duration_expected" optional="hide" widget="float_time" sum="expected duration"/>
+                        <field name="duration" optional="hide" widget="mrp_time_counter" attrs="{'invisible': [('production_state','=', 'draft')], 'readonly': [('is_user_working', '=', True)]}" sum="real duration"/>
+                        <field name="state" widget="badge" decoration-warning="state == 'progress'" decoration-success="state == 'done'" decoration-info="state not in ('progress', 'done', 'cancel')" attrs="{'invisible': [('production_state', '=', 'draft')], 'column_invisible': [('parent.state', '=', 'draft')]}"/>
+
+                        <!-- <field name="total_mtr_dye" optional="show" /> -->
+                        <field name="total_dyeing" optional="show" />
+
+
+
+                        <!-- <button name="button_start" type="object" string="Start" class="btn-success" attrs="{'invisible': ['|', '|', '|', ('production_state','in', ('draft', 'done', 'cancel')), ('working_state', '=', 'blocked'), ('state', '=', 'done'), ('is_user_working', '!=', False)]}"/> -->
+                        <button name="create_po" type="object" icon="fa-pencil-square-o" string="Create PO" class="oe_highlight btn-success" attrs="{'invisible': ['|', '|', '|', ('production_state','in', ('draft', 'done', 'cancel')), ('working_state', '=', 'blocked'), ('state', '=', 'done'), ('is_user_working', '!=', False)]}"/>
+                        <!-- <button name="create_po" type="object" icon="fa-pencil-square-o" string="Create PO" class="oe_highlight btn-success" attrs="{'invisible': ['|', '|', '|', ('production_state','in', ('draft', 'done', 'cancel')), ('working_state', '=', 'blocked'), ('state', '=', 'done'), ('is_user_working', '!=', False)]}"/> -->
+                        <button name="show_po" type="object" icon="fa-eye" string="Show PO" class="oe_highlight btn-success" attrs="{'invisible': [('order_id','=',False)]}"/>
+                        <button name="show_receive_po" type="object" icon="fa-truck" string="Receive" class="oe_highlight btn-warning" attrs="{'invisible': [('order_id','=',False)]}"/>
+
+                        <!-- <button name="button_pending" type="object" string="Pause" class="btn-warning" attrs="{'invisible': ['|', '|', ('production_state', 'in', ('draft', 'done', 'cancel')), ('working_state', '=', 'blocked'), ('is_user_working', '=', False)]}"/> -->
+                        <button name="button_finish" type="object" string="Done" class="btn-success" attrs="{'invisible': ['|', '|', ('production_state', 'in', ('draft', 'done', 'cancel')), ('working_state', '=', 'blocked'), ('is_user_working', '=', False)]}"/>
+                        <!-- <button name="501" type="action" string="Block" context="{'default_workcenter_id': workcenter_id}" class="btn-danger" attrs="{'invisible': ['|', ('production_state', 'in', ('draft', 'done', 'cancel')), ('working_state', '=', 'blocked')]}"/>
+                        <button name="button_unblock" type="object" string="Unblock" context="{'default_workcenter_id': workcenter_id}" class="btn-danger" attrs="{'invisible': ['|', ('production_state', 'in', ('draft', 'done', 'cancel')), ('working_state', '!=', 'blocked')]}"/> -->
+                        <!-- <button name="action_open_wizard" type="object" icon="fa-external-link" class="oe_edit_only" context="{'default_workcenter_id': workcenter_id}"/>
+                        <field name="show_json_popover" invisible="1"/>
+                        <field name="json_popover" widget="mrp_workorder_popover" string=" " width="0.1" attrs="{'invisible': [('show_json_popover', '=', False)]}"/> -->
+                    </tree>
+                </field>
+                <!-- </group> -->
+
             </xpath>
 
         </field>
     </record>
 
     <record id="mrp_production_sample_action" model="ir.actions.act_window">
-            <field name="name">Manufacturing Orders (Sample)</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">mrp.production</field>
-            <field name="view_mode">tree,kanban,form,calendar,pivot,graph</field>
-            <field name="view_id" eval="False"/>
-            <field name="search_view_id" ref="mrp.view_mrp_production_filter"/>
-            <field name="context">{'search_default_todo': True, 'default_company_id': allowed_company_ids[0]}</field>
-            <field name="domain">[('picking_type_id.active', '=', True),('is_sample', '=', True)]</field>
-            <field name="help" type="html">
-              <p class="o_view_nocontent_smiling_face">
+        <field name="name">Manufacturing Orders (Sample)</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">mrp.production</field>
+        <field name="view_mode">tree,kanban,form,calendar,pivot,graph</field>
+        <field name="view_id" eval="False"/>
+        <field name="search_view_id" ref="mrp.view_mrp_production_filter"/>
+        <field name="context">{'search_default_todo': True, 'default_company_id': allowed_company_ids[0]}</field>
+        <field name="domain">[('picking_type_id.active', '=', True),('is_sample', '=', True)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
                 No manufacturing order found. Let's create one.
-              </p><p>
+            </p>
+            <p>
                 Consume <a name="%(product.product_template_action)d" type='action' tabindex="-1">components</a> and build finished products using <a name="%(mrp.mrp_bom_form_action)d" type='action' tabindex="-1">bills of materials</a>
-              </p>
-            </field>
-        </record>
+            </p>
+        </field>
+    </record>
 
-    <menuitem action="mrp_production_sample_action"
-            id="menu_mrp_production_sample_action"
-            name="Manufacturing Orders (Sample)"
-            parent="mrp.menu_mrp_manufacturing"
-            sequence="2"/>
+    <record id="mrp_production_inherit_tree_sample" model="ir.ui.view">
+        <field name="name">mrp.production.inherit.tree.sample</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="state" position="before">
+                <field name="is_sample" />
+            </field>
+        </field>
+    </record>
+
+    <menuitem action="mrp_production_sample_action" id="menu_mrp_production_sample_action" name="Manufacturing Orders (Sample)" parent="mrp.menu_mrp_manufacturing" sequence="2"/>
 
 </odoo>

@@ -9,7 +9,8 @@
           <field name="supplier" />
           <field name="cost_service" />
           <field name="bom_id" invisible="1"/>
-          <field name="fabric_id" />
+          <field name="fabric_id" widget="many2many_tags" options="{'no_show':True,'no_create':True,'no_open':True}" string="Material"/>
+          <!-- <field name="accessories_ids" widget="many2many_tags" options="{'no_show':True,'no_create':True,'no_open':True}"/> -->
           <field name="color_id" />
           <field name="hk" />
           <field name="qty" />
@@ -39,7 +40,8 @@
           <field name="supplier" />
           <field name="cost_service" />
           <field name="bom_id" invisible="1"/>
-          <field name="fabric_id" domain="[('bom_id','=', bom_id)]"/>
+          <field name="fabric_id" domain="[('bom_id','=', bom_id)]" widget="many2many_tags" options="{'no_show':True,'no_create':True,'no_open':True}" string="Material"/>
+          <!-- <field name="accessories_ids" widget="many2many_tags" options="{'no_show':True,'no_create':True,'no_open':True}"/> -->
           <field name="hk" />
           <field name="qty" />
           <field name="shrinkage" />

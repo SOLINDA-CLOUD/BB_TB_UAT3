@@ -3,14 +3,15 @@
 
     <data>
 
-        <record id="mrp_bom_inherit_mrp" model="ir.ui.view">
+        <!-- <record id="mrp_bom_inherit_mrp" model="ir.ui.view">
             <field name="name">mrp.bom.view.form.inherit</field>
             <field name="model">mrp.bom</field>
             <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
             <field name="arch" type="xml">
 
             </field>
-        </record>
+        </record> -->
+
 
     </data>
 </odoo>

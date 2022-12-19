@@ -131,6 +131,7 @@ class PurchaseOrder(models.Model):
 
                     for l in header_product:
                         if l.product_id:
+                            material_variant = []
                             location = i.get_location(l.product_id)
                             if l.product_id.bom_count > 0:
                                 BoM = self.env["mrp.bom"].search([('product_tmpl_id', '=', l.product_id.product_tmpl_id.id),('is_final', '=', True)])
@@ -142,6 +143,16 @@ class PurchaseOrder(models.Model):
                                     raise ValidationError(statement)
                                 if len(BoM) > 1:
                                     raise ValidationError("BoM final more than 1!")
+                                if BoM:
+                                    for b in BoM.bom_line_variant_ids:
+                                        material_variant.append((0,0, {
+                                                'product_id' : b.product_id.id,
+                                                'product_qty' : b.product_qty,
+                                                'product_uom_id' : b.product_uom_id.id,
+                                                'supplier' : b.supplier.id,
+                                                'ratio' : b.ratio,
+                                                'sizes' : b.sizes,
+                                        })) 
                             else:
                                 statement = "There is no BoM in product %s!" % l.product_id.product_tmpl_id.name
                                 raise ValidationError(statement)
@@ -159,7 +170,8 @@ class PurchaseOrder(models.Model):
                                 'picking_type_id':BoM.picking_type_id.id,
                                 'location_src_id':BoM.picking_type_id.default_location_src_id.id,
                                 'location_dest_id':BoM.picking_type_id.default_location_dest_id.id,
-                                'production_location_id':location.id
+                                'production_location_id':location.id,
+                                'mrp_bom_variant_ids':material_variant,
                                 })
                                
                             if mp:
@@ -190,6 +202,7 @@ class PurchaseOrder(models.Model):
                                 mp.move_raw_ids = list_move_raw
                                 mp._onchange_workorder_ids()
                                 mp.update({'move_byproduct_ids':mo_line,'by_product_ids':by_prod_temp})
+                                mp.update_qty_consume_with_variant()
                 i.write({'mrp_ids' : [(6,0,mrp)],'mrp_id':mp.id})
                 return i.show_mrp_prod()
 

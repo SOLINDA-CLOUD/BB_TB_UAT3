@@ -32,6 +32,10 @@
         'views/mrp_breakdown.xml',
         'views/mrp_production.xml',
         'views/stock_move.xml',
+        'views/mrp_workorder_views.xml',
+        'report/action_report.xml',
+        'report/production_detail.xml',
+        'report/sample_detail.xml',
         'views/templates.xml',
     ],
     # only loaded in demonstration mode

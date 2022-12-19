@@ -14,15 +14,17 @@ class AccountMove(models.Model):
 
     state_bill = fields.Selection(selection=[
             ('draft', 'Draft'),
-            ('approve', 'Approved'),
             ('posted', 'Posted'),
+            ('approve', 'Approved'),
             ('cancel', 'Cancelled'),
-        ], string='Status', related="state", required=True, readonly=True, copy=False, tracking=True,
+        ], string='Status', required=True, readonly=True, copy=False, tracking=True,
         default='draft')
 
-    @api.onchange('state')
-    def _onchange_state(self):
-        self.state_bill = self.state
+    def action_post(self):
+        res = super(AccountMove,self).action_post()
+        self.state_bill = 'posted'
+        return res
+
 
     def approve_posted_bill(self):
-        self.state = 'approve'
+        self.state_bill = 'approve'

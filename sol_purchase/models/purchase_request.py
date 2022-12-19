@@ -28,6 +28,7 @@ class LabelHardware(models.Model):
     label_hardware_id = fields.Many2one('purchase.request', string='label hardware ids')
     description = fields.Char('Description')
     color = fields.Many2one(comodel_name='print.color', string='Color')
+    color_id = fields.Many2one('product.attribute.value', string='Color', domain="[('attribute_id.name', '=', 'COLOR')]")
     qty_label = fields.Float('Qty')
 
 class LabelDress(models.Model):
@@ -135,7 +136,7 @@ class PurchaseRequest(models.Model):
     spec = fields.Html('Specification')
     count = fields.Integer(string='count')
     source = fields.Char(string='Source Document')
-    name_source = fields.Char(string='Name')
+    name_source = fields.Char(string='Source Document')
 
     ### PATTERN ALTERATION ###
     purchase_custom_ids = fields.One2many('custom.pattern', 'parent_custom_id', string='Custom', copy=True)

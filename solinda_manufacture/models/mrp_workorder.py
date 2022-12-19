@@ -9,7 +9,8 @@ class MrpWorkorder(models.Model):
 
     order_id = fields.Many2one(comodel_name='purchase.order',string='PO')
     supplier = fields.Many2one(comodel_name='res.partner',related="operation_id.supplier", string='Supplier')
-    fabric_id = fields.Many2one(comodel_name='mrp.bom.line',string='Fabric', related='operation_id.fabric_id')
+    fabric_id = fields.Many2many(comodel_name='mrp.bom.line',string='Fabric', related='operation_id.fabric_id')
+    # accessories_ids = fields.Many2many(comodel_name='product.product', string='Accessories', domain="""[('type', 'in', ['product', 'consu']),'|',('company_id', '=', False),('company_id', '=', company_id)]""", check_company=True)
     hk = fields.Float(string='HK', related='operation_id.hk', store=True)
     color_id = fields.Many2one(comodel_name='product.attribute.value', string='Color', related='operation_id.color_id')
     shrinkage = fields.Float(string='Shkg(%)', default=0.0)
@@ -20,21 +21,23 @@ class MrpWorkorder(models.Model):
         states={'done': [('readonly', True)], 'cancel': [('readonly', True)]},
         help="Expected duration (in minutes)")
     
-    qty_production = fields.Float(string="Qty", related='production_id.product_qty', store=True)
+    qty_production = fields.Float(string="Qty", related='production_id.total_qty')
     in_date = fields.Date('In Date')
     out_date = fields.Date('Out Date')
     picking_ids = fields.Many2many('stock.picking', string='Receive',related="order_id.picking_ids")
     total_dyeing = fields.Float(string='Total Dyeing')
     # total_mtr_dye = fields.Float(string='Total Mtr')
     total_cost = fields.Float(string="Total Cost", compute="_compute_total_cost", store=True)
+    cost_service = fields.Float(string='Cost Service', related='operation_id.cost_service', store=True)
 
-    @api.depends('total_dyeing', 'hk', 'qty_production', 'workcenter_id.costs_hour')
+
+    @api.depends('total_dyeing', 'hk', 'qty_production', 'cost_service')
     def _compute_total_cost(self):
         for line in self:
             if line.total_dyeing:
-                line.total_cost = line.total_dyeing * line.workcenter_id.costs_hour
+                line.total_cost = line.total_dyeing * line.cost_service
             else:
-                line.total_cost = line.hk * line.qty_production * line.workcenter_id.costs_hour
+                line.total_cost = line.hk * line.qty_production * line.cost_service
 
     def show_receive_po(self):
         self.order_id.action_view_picking()
@@ -56,7 +59,7 @@ class MrpWorkorder(models.Model):
     def create_po(self):
         self = self.sudo()
         for i in self:
-            raw_po_line = []
+            raw_po_line,updt_variant = [],[]
             total_quant = sum(i.production_id.purchase_id.order_line.mapped('product_qty'))
             i.button_start()
             if not i.supplier:
@@ -69,12 +72,28 @@ class MrpWorkorder(models.Model):
             raw_po_line.append((0,0, {
                 'product_id': i.workcenter_id.product_service_id.id,
                 'name': i.workcenter_id.product_service_id.name,
+                'price_unit': i.cost_service,
                 # 'fabric': i.fabric_id.product_id.name,
-                # 'lining':'',
-                # 'color':'',
                 'product_qty': total_quant,
-            }))           
-            po.update({"order_line": raw_po_line})
+                'comment_bool': True,
+            }))
+            for d in i.production_id.by_product_ids:
+                updt_variant.append([0,0,{
+                'name': d.product_id.id,
+                'fabric': d.fabric_por_id.id,
+                'lining': d.lining_por_id.id,
+                'color': d.colour,
+                'size': d.size,
+                'product_qty': d.product_uom_qty,
+                'price_unit': i.cost_service,
+                'image': d.product_id.image_1920,
+                }])           
+            po.update({
+                "order_line": raw_po_line,
+                'pw_ids': updt_variant,
+                'sub_suplier': i.supplier.category_id.ids,
+                'sample_order_no': i.production_id.name,
+                })
             for pol in po.order_line:
                 product_lang = pol.product_id.with_context(
                     lang=get_lang(pol.env, pol.partner_id.lang).code,

@@ -126,6 +126,7 @@ class PurchaseRequestLineMakePurchaseOrder(models.TransientModel):
             raise UserError(_("Enter a supplier."))
         supplier = self.supplier_id
         data = {
+            "name": 'New',
             "origin": origin,
             "partner_id": self.supplier_id.id,
             "fiscal_position_id": supplier.property_account_position_id
