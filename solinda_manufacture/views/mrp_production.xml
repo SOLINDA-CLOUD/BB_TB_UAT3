@@ -28,8 +28,13 @@
                 <attribute name="domain">['|','|',('categ_id.name','ilike','Raw Material'),('categ_id.name','ilike','ACCESSORIES'),('categ_id.parent_id.name','ilike','ACCESSORIES')]</attribute>
             </xpath>
 
+            <xpath expr="//notebook/page/field/tree/field[@name='supplier']" position="attributes">
+                <attribute name="attrs">{'readonly':['|',('is_sample','=', False),('state','=', 'done')]}</attribute>
+            </xpath>
+
             <xpath expr="//notebook/page/field/tree/field[@name='purchase_id']" position="before">
                 <field name="product_qty_available" invisible="1"/>
+                <field name="is_sample" invisible="1"/>
             </xpath>
 
         </field>
@@ -71,6 +76,7 @@
                             <field name="ratio" readonly="1" force_save="1"/>
                             <field name="po_qty" readonly="1" force_save="1"/>
                             <field name="product_qty" readonly="1" force_save="1"/>
+                            <field name="shrinkage" readonly="1" force_save="1"/>
                             <field name="total_qty" readonly="1" force_save="1"/>
                             <field name="product_uom_id" options="{'no_open':True,'no_create':True}" groups="uom.group_uom" readonly="1" force_save="1"/>
                         </tree>

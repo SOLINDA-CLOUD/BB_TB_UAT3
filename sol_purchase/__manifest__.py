@@ -26,6 +26,7 @@
     'data': [
         'security/ir.model.access.csv',
         'security/pattern_security.xml',
+        # 'security/record_rule.xml',
         'views/purchase_request_views.xml',
         'views/purchase_order_views.xml',
         'report/report_action.xml',
@@ -39,7 +40,6 @@
         'views/data_master_story.xml',
         'views/original_sample.xml',
         'views/product_menuitem.xml',
-        'security/record_rule.xml',
         # 'views/templates.xml',
         'views/sequence_data.xml',
     ],

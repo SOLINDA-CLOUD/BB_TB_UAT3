@@ -149,7 +149,7 @@ class PurchaseOrderLine(models.Model):
 class StockMove(models.Model):
     _inherit = "stock.move"
 
-    analytic_account_id = fields.Many2one('account.analytic.account',string='Analytic Account')
+    analytic_account_id = fields.Many2one('account.analytic.account',string='Analytic Account', related='picking_id.partner_id.analytic_account_id')
     tag_ids  = fields.Many2many('account.analytic.tag', string= 'Tag')
     date_expected = fields.Datetime(string='Date Expected', )
 

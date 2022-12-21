@@ -7,7 +7,7 @@
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
             <xpath expr="//sheet/group/group/field[@name='vat']" position="after">
-                <field name="analytic_account_id" />
+                <field name="analytic_account_id" force_save="1" />
             </xpath>
         </field>
     </record>

@@ -3,8 +3,7 @@ from odoo import api, fields, models
 class Partner(models.Model):
     _inherit = 'res.partner'
 
-    analytic_account_id = fields.Many2one('account.analytic.account',string='Analytic Account')
-    # analytic_account_flag = fields.Boolean(string="Create Analytic Account")
+    analytic_account_id = fields.Many2one('account.analytic.account',string='Analytic Account', store=True)
 
     @api.model_create_multi
     def create(self, vals_list):

@@ -72,7 +72,7 @@ class MrpProductionBomVariant(models.Model):
     ratio = fields.Float(string='Ratio', default=1.00)
     cost = fields.Float(string="Cost", related='product_id.standard_price')
     total_material = fields.Float(string="Total Material", compute=_compute_total_material)
-            
+    shrinkage = fields.Float(string='Shkg(%)')
 
 class MrpProduction(models.Model):
     _inherit = 'mrp.production'
@@ -120,6 +120,14 @@ class MrpProduction(models.Model):
     def update_qty_consume_with_variant(self):
         for move in self.move_raw_ids:
             qty_consume = 0
+            for var in self.mrp_bom_variant_ids:
+                if move.product_id.id == var.product_id.id:
+                    qty_consume += var.total_qty
+            move.product_uom_qty = qty_consume
+
+    def update_qty_variant(self):
+        for move in self.move_raw_ids:
+            qty_consume = 0
             sql ='''select pp.product_tmpl_id as product_tmpl_id,
                             mv.sizes as size_variant, 
                             md.size as size_dummy, 
@@ -139,15 +147,20 @@ class MrpProduction(models.Model):
                 qty_variant = d['qty_variant']
                 qty_dummy = d['qty_dummy']
                 total_qty = d['qty_consume']
+                total_tambah_persen = 0
+                total_qty = 0
                 for var in self.mrp_bom_variant_ids:
                     if var.product_id.product_tmpl_id.id == product_tmpl_id and var.sizes == sizes:
                         var.po_qty = qty_dummy
-                        var.total_qty = total_qty
+                        total_qty = var.po_qty * var.product_qty
+                        total_tambah_persen = (total_qty * var.shrinkage) / 100
+                        var.total_qty = total_qty + total_tambah_persen
                     else:
-                        var.total_qty = var.po_qty * var.product_qty
-                if move.product_id.product_tmpl_id.id == product_tmpl_id:
-                    qty_consume += d['qty_consume']
-                    move.product_uom_qty = qty_consume
+                        total_qty = var.po_qty * var.product_qty
+                        total_tambah_persen = (total_qty * var.shrinkage) / 100
+                        var.total_qty = total_qty + total_tambah_persen
+                        qty_consume += var.total_qty
+            
 
     def _create_workorder(self):
         for production in self:

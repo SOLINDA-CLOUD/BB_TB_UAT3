@@ -14,11 +14,13 @@
             <field name="mrp_id" widget="statinfo" string="Manufacture" attrs="{'invisible':[('mrp_count', '!=', 1)]}"/>
             <field name="mrp_count" widget="statinfo" invisible="1" attrs="{'invisible':[('mrp_count', '&gt;', 1)]}"/>
             <field name="mrp_ids" invisible="1"/>
+            <field name="is_create_pps" invisible="1"/>
           </button>
         </xpath>
 
         <xpath expr="//header" position="inside">
-          <button string="Create Production Sample" name="create_mo_production" groups="solinda_manufacture.group_potomo_access" type="object" class="oe_highlight"/>
+          <button string="Create Manufacturing Orders Sample" name="create_mo_production" groups="solinda_manufacture.group_potomo_access" type="object" class="oe_highlight"/>
+          <button string="Create Pre-Production Sample" name="create_pps" groups="solinda_manufacture.group_potomo_access" type="object" class="oe_highlight" attrs="{'invisible':[('is_create_pps', '=', True)]}"/>
         </xpath>
 
 

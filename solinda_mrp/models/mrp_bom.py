@@ -115,6 +115,7 @@ class MrpBom(models.Model):
     suggest_price_2 = fields.Float(string="Suggest Price 2", compute=_compute_suggest_price_2)
     suggest_price_3 = fields.Float(string="Suggest Price 3", compute=_compute_suggest_price_3)
     bom_line_variant_ids = fields.One2many('mrp.bom.line.variant', 'bom_id', 'Material Variant', copy=True)
+    label_hardware_ids = fields.One2many('mrp.bom.label.hardware', 'label_hardware_id', string='Label Hardware')
 
     @api.onchange('bom_line_ids')
     def _onchange_bom_line_variant_ids(self):
@@ -200,6 +201,7 @@ class MrpBomLine(models.Model):
     ratio = fields.Float(string='Ratio', default=1.00)
     cost = fields.Float(string="Cost", related='product_id.standard_price')
     total_material = fields.Float(string="Total Material", compute=_compute_total_material)
+    qty_available = fields.Float(string="Quantity On Hand", related='product_id.qty_available')
 
 class MrpBomLineVariant(models.Model):
     _name = 'mrp.bom.line.variant'
@@ -257,6 +259,7 @@ class MrpBomLineVariant(models.Model):
     ratio = fields.Float(string='Ratio', default=1.00)
     cost = fields.Float(string="Cost", related='product_id.standard_price')
     total_material = fields.Float(string="Total Material", compute=_compute_total_material)
+    shrinkage = fields.Float(string='Shkg(%)')
 
     @api.depends('product_id', 'bom_id')
     def _compute_child_bom_id(self):
@@ -334,6 +337,15 @@ class MrpBomLineVariant(models.Model):
             'limit': 80,
             'context': "{'default_res_model': '%s','default_res_id': %d, 'default_company_id': %s}" % ('product.product', self.product_id.id, self.company_id.id)
         }
+
+class MrpBomLabelHardware(models.Model):
+    _name = 'mrp.bom.label.hardware'
+    _description = 'Label Hardware'
+
+    label_hardware_id = fields.Many2one('mrp.bom', string='BoM')
+    description = fields.Char('Description')
+    color = fields.Many2one(comodel_name='print.color', string='Color')
+    qty_label = fields.Float('Qty')
 
 class Sizes(models.Model):
     _name = 'sizes'

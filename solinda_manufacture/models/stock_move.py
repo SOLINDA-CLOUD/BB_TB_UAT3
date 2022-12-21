@@ -3,6 +3,11 @@ from odoo.exceptions import ValidationError
 from datetime import datetime, date
 
 
+class StockMove(models.Model):
+    _inherit = 'stock.move'
+
+    is_sample = fields.Boolean(string="Is Sample", related='raw_material_production_id.is_sample')
+
 class StockMoveLine(models.Model):
     _inherit = 'stock.move.line'
 

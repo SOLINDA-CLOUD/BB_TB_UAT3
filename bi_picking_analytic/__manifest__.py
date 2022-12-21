@@ -33,7 +33,8 @@
     "currency": 'EUR',
     'depends': ['base','sale_management','stock','analytic',"stock_account",'purchase'],
     'data': [
-                "views/stock_move_views.xml"
+                "views/stock_move_views.xml",
+                "views/res_partner_views.xml"
             ],
 	'qweb': [ ],
     'demo': [ ],

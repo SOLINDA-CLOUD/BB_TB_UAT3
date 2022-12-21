@@ -8,6 +8,7 @@ class PurchaseRequest(models.Model):
     mrp_id = fields.Many2one('mrp.production', string='MO',copy=False)
     mrp_ids = fields.Many2many('mrp.production', string='MO',copy=False)
     mrp_count = fields.Integer('Mrp Count',compute="_compute_mrp_count")
+    is_create_pps = fields.Boolean('Is Create Pre-Production Sample')
 
     @api.depends('mrp_ids')
     def _compute_mrp_count(self):
@@ -51,6 +52,36 @@ class PurchaseRequest(models.Model):
         else:
             location = location_by_company.get(company.id)[0]
         return location
+
+    def create_pps(self):
+        ParentBoM = self.env["tender.bom"]
+        label_hardware_ids = []
+        for label in self.label_hardware_ids:
+            label_hardware_ids.append((0,0,{
+                        'description' : label.description,
+                        'color' : label.color.id,
+                        'qty_label' : label.qty_label,
+                        }))
+        for line in self.line_ids:
+            material_ids = []
+            material_ids.append((0,0,{
+                        'product_id' : line.fabric_smp.id,
+                        }))
+            material_ids.append((0,0,{
+                        'product_id' : line.lining_smp.id,
+                        }))
+            parent_bom_id = ParentBoM.create({'name': line.product_id.name,
+                              'product_tmpl_id': line.product_id.product_tmpl_id.id,
+                              'date': fields.date.today()
+                              })
+            parent_bom_id.new_bom()
+            bom_ids = self.env["mrp.bom"].search([('tender_id','=',parent_bom_id.id)])
+            for bom in bom_ids:
+                bom.write({'bom_line_ids': material_ids,
+                           'label_hardware_ids': label_hardware_ids
+                            })
+                bom._onchange_bom_line_variant_ids()
+        self.is_create_pps = True
 
     def create_mo_production(self):
         mrp,mo_line,by_prod_temp,update = [],[],[],[]
@@ -100,6 +131,7 @@ class PurchaseRequest(models.Model):
 
                     for l in header_product:
                         if l.product_id:
+                            material_variant = []
                             # picking_type_id = False
                             # picking_type = self.env['stock.picking.type'].search([('warehouse_id','=',i.picking_type_id.warehouse_id.id),('code','=','mrp_operation')],limit=1)
                             # if picking_type:
@@ -118,6 +150,17 @@ class PurchaseRequest(models.Model):
                                 if len(BoM) > 1:
                                     # raise ValidationError("BoM final more than 1!")
                                     raise ValidationError("BoM more than 1!")
+                                if BoM:
+                                    for b in BoM.bom_line_variant_ids:
+                                        material_variant.append((0,0, {
+                                                'product_id' : b.product_id.id,
+                                                'product_qty' : b.product_qty,
+                                                'product_uom_id' : b.product_uom_id.id,
+                                                'supplier' : b.supplier.id,
+                                                'ratio' : b.ratio,
+                                                'sizes' : b.sizes,
+                                                'shrinkage' : b.shrinkage,
+                                        })) 
                             else:
                                 statement = "There is no BoM in product %s!" % l.product_id.product_tmpl_id.name
                                 raise ValidationError(statement)
@@ -137,7 +180,8 @@ class PurchaseRequest(models.Model):
                                 'picking_type_id':BoM.picking_type_id.id,
                                 'location_src_id':BoM.picking_type_id.default_location_src_id.id,
                                 'location_dest_id':BoM.picking_type_id.default_location_dest_id.id,
-                                'production_location_id':location.id
+                                'production_location_id':location.id,
+                                'mrp_bom_variant_ids':material_variant,
                                 })
                                
                             if mp:
@@ -168,6 +212,8 @@ class PurchaseRequest(models.Model):
                                 mp.move_raw_ids = list_move_raw
                                 mp._onchange_workorder_ids()
                                 mp.update({'move_byproduct_ids':mo_line,'by_product_ids':by_prod_temp})
+                                mp.update_qty_variant()
+                                mp.update_qty_consume_with_variant()
                 i.write({'mrp_ids' : [(6,0,mrp)],'mrp_id':mp.id})
                 return i.show_mrp_prod()
 
