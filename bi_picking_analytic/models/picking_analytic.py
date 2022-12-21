@@ -143,7 +143,7 @@ class PurchaseOrderLine(models.Model):
             else:
                 template['product_uom_qty'] = diff_quantity
             res.append(template)
-        return res
+        return res 
 
 
 class StockMove(models.Model):
