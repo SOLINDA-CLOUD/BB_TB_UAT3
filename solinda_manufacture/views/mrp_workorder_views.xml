@@ -43,11 +43,11 @@
                 <attribute name="optional">hide</attribute>
             </xpath>
 
-            <!-- <xpath expr="//button[@name='button_start']" position="replace">
+            <xpath expr="//button[@name='button_start']" position="replace">
                 <button name="create_po" type="object" icon="fa-pencil-square-o" string="Create PO" class="oe_highlight btn-success" attrs="{'invisible': ['|', '|', '|', ('production_state','in', ('draft', 'done', 'cancel')), ('working_state', '=', 'blocked'), ('state', '=', 'done'), ('is_user_working', '!=', False)]}"/>
                 <button name="show_po" type="object" icon="fa-eye" string="Show PO" class="oe_highlight btn-success" attrs="{'invisible': [('order_id','=',False)]}"/>
                 <button name="show_receive_po" type="object" icon="fa-truck" string="Receive" class="oe_highlight btn-warning" attrs="{'invisible': [('order_id','=',False)]}"/>
-            </xpath> -->
+            </xpath>
 
             <!-- <xpath expr="//button[@name='action_open_wizard']" position="replace">
                 <attribute name="invisible">1</attribute>
